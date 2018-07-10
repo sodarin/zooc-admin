@@ -1,0 +1,4 @@
+<div class="content">
+  <button style="margin-left: 20px; margin-top: 20px" nz-button [nzType]="'primary'" (click)="addNewMoment()">添加朋友圈</button>
+  <app-moment-list *ngFor="let item of moments" [item]="item"></app-moment-list>
+</div>

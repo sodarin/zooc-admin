@@ -1,0 +1,30 @@
+<div class="content">
+  <button nz-button (click)="addNewData()" class="editable-add-btn">添加新分部</button>
+  <nz-table
+    #editRowTable
+    nzBordered
+    [nzData]="branches">
+    <thead>
+    <tr>
+      <th nzWidth="30%">分部名字</th>
+      <th>分部地址</th>
+      <th>分部电话</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of editRowTable.data">
+      <td>{{data.name}}</td>
+      <td>{{data.address}}</td>
+      <td>{{data.telephone}}</td>
+      <td>
+        <i style="margin-left: 30px;margin-right: 30px; cursor: pointer" class="anticon anticon-edit" (click)="edit(data)"></i>
+        <nz-popconfirm [nzTitle]="'确认删除？'" (nzOnConfirm)="deleteRow(data.branchId)">
+          <i style="cursor: pointer;" class="anticon anticon-close" nz-popconfirm></i>
+        </nz-popconfirm>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>
+

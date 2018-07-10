@@ -1,0 +1,64 @@
+<nz-list style="background: white; margin-top: 20px;" [nzDataSource]="data" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
+  <ng-template #item let-item>
+    <nz-list-item style="margin-left: 15px;" [nzActions]="[editAction]">
+      <ng-template #editAction>
+        <i *ngIf="!item.isEditing" class="anticon anticon-edit" style="margin-right: 50px; margin-top: 20px;" (click)="edit(item)"></i>
+        <i nz-popconfirm nzTitle="确认修改？" (nzOnConfirm)="confirm(item)" (nzOnCancel)="cancel(item)" *ngIf="item.isEditing" class="anticon anticon-check" style="margin-right: 50px; margin-top: 20px;"></i>
+      </ng-template>
+      <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzContent">
+        <ng-template #nzTitle>
+          <a style="color: black; font-size: 18px;">{{item.title}}</a>
+        </ng-template>
+        <ng-template #nzContent>
+          <span class="introduction" *ngIf="!item.isEditing" style="color: rgba(0, 0, 0, .65); font-size: 16px;">{{item.introduction}}</span>
+          <label>
+            <textarea [(ngModel)]="item.introduction" autofocus="autofocus" *ngIf="item.isEditing" nz-input nzAutosize>{{item.introduction}}</textarea>
+          </label>
+        </ng-template>
+      </nz-list-item-meta>
+    </nz-list-item>
+  </ng-template>
+</nz-list>
+
+<div class="upload-meta-data" style="margin-top: 20px; background: white; width: 100%">
+  <div class="upload-picture">
+    <span class="title" style="font-size: 26px; line-height: 60px; color: #000;">企业图片上传</span>
+    <nz-upload
+      nzAction="https://jsonplaceholder.typicode.com/posts/"
+      nzListType="picture-card"
+      [(nzFileList)]="fileList"
+      [nzShowButton]="fileList.length < 3"
+      [nzPreview]="handlePreview">
+      <i class="anticon anticon-plus"></i>
+      <div class="upload-text">Upload</div>
+    </nz-upload>
+    <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
+              (nzOnCancel)="previewVisible=false">
+      <ng-template #modalContent>
+        <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }"/>
+      </ng-template>
+    </nz-modal>
+  </div>
+
+  <div class="upload-video">
+    <span class="title" style="font-size: 26px; line-height: 60px; color: #000;">企业视频上传</span>
+    <nz-upload
+      nzType="drag"
+      [nzMultiple]="true"
+      [nzLimit]="2"
+      nzAction="https://jsonplaceholder.typicode.com/posts/"
+      (nzChange)="handleChange($event)">
+      <p class="ant-upload-drag-icon">
+        <i class="anticon anticon-inbox"></i>
+      </p>
+      <p class="ant-upload-text">Click or drag file to this area to upload</p>
+    </nz-upload>
+  </div>
+  <div class="empty-space" style="height: 50px; width: 100%"></div>
+
+</div>
+
+<div class="editor" style="margin-top: 20px; background: white; width: 100%">
+  <span class="title" style="font-size: 26px; line-height: 60px; color: #000;">企业详情修改</span>
+  <app-ckeditor [ckeditorContent]="detail" (detailEmit)="updateDetail($event)"></app-ckeditor>
+</div>

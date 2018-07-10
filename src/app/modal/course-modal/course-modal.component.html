@@ -1,0 +1,78 @@
+<div>
+  <form nz-form [formGroup]="courseForm">
+    <nz-form-item>
+      <nz-form-control style="width: 100%">
+        <nz-input-group>
+          <input type="text" nz-input formControlName="name" placeholder="请输入课程名称">
+        </nz-input-group>
+        <nz-form-explain *ngIf="courseForm.get('name').dirty && courseForm.get('name').errors">请输入课程名称</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <div class="upload-meta-data" style="margin-top: 20px; background: white; width: 100%">
+      <div class="upload-picture">
+        <nz-upload
+          nzAction="https://jsonplaceholder.typicode.com/posts/"
+          nzListType="picture-card"
+          [(nzFileList)]="fileList"
+          [nzShowButton]="fileList.length < 3"
+          [nzPreview]="handlePreview">
+          <i class="anticon anticon-plus"></i>
+          <div class="upload-text">Upload</div>
+        </nz-upload>
+        <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
+                  (nzOnCancel)="previewVisible=false">
+          <ng-template #modalContent>
+            <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }"/>
+          </ng-template>
+        </nz-modal>
+      </div>
+    </div>
+
+    <nz-form-item>
+      <nz-form-control style="width: 100%">
+        <nz-input-group>
+          <input type="number" nz-input formControlName="price" placeholder="请输入课程价格">
+        </nz-input-group>
+        <nz-form-explain *ngIf="courseForm.get('price').dirty && courseForm.get('price').errors">请输入课程价格</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+
+    <nz-form-item>
+      <nz-form-control style="width: 100%">
+        <nz-input-group>
+          <nz-select formControlName="type" style="width: 100%" [(ngModel)]="selectedValue" nzAllowClear nzPlaceHolder="选择课程类别">
+            <nz-option *ngFor="let category of categories" [nzValue]="category.categoryId" [nzLabel]="category.name"></nz-option>
+          </nz-select>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="course-offering" *ngFor="let address of courseOfferings" style="width: 100%;">
+      <nz-form-control style="width: 48%">
+        <nz-input-group>
+          <input [value]="address.branchName" nz-input [nzAutocomplete]="auto">
+          <nz-autocomplete nzBackfill #auto>
+            <nz-auto-option *ngFor="let branch of branches" [nzValue]="branch.name">
+              {{branch.name}}
+            </nz-auto-option>
+          </nz-autocomplete>
+        </nz-input-group>
+      </nz-form-control>
+      <div class="empty-space"></div>
+      <nz-form-control style="width: 48%">
+        <nz-input-group>
+          <input [value]="address.lecturerName" nz-input [nzAutocomplete]="lecturerAuto">
+          <nz-autocomplete nzBackfill #lecturerAuto>
+            <nz-auto-option *ngFor="let lecturer of lecturers" [nzValue]="lecturer.name">
+              {{lecturer.name}}
+            </nz-auto-option>
+          </nz-autocomplete>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <app-ckeditor [ckeditorContent]="detailContent"></app-ckeditor>
+  </form>
+</div>

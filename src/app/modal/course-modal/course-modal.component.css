@@ -1,0 +1,8 @@
+.course-offering {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.empty-space {
+  flex-grow: 1;
+}

@@ -1,0 +1,13 @@
+nz-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.data {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.item {
+  flex-grow: 1;
+}

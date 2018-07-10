@@ -1,0 +1,54 @@
+<div class="content">
+  <nz-table #nzTable [nzData]="displayData">
+    <thead>
+    <tr>
+      <th>
+        订单编号
+        <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+          <i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>
+          <div class="custom-filter-dropdown">
+            <input type="text" nz-input placeholder="搜索订单编号" [(ngModel)]="searchValue">
+            <button nz-button [nzType]="'primary'" (click)="search()">搜索</button>
+          </div>
+        </nz-dropdown>
+      </th>
+      <th>
+        课程编号
+      </th>
+      <th>
+        用户昵称
+      </th>
+      <th nzShowSort [(nzSort)]="sortMap.price" (nzSortChange)="sort('price',$event)">
+        订单金额
+      </th>
+      <th nzShowFilter [nzFilters]="filterType" (nzFilterChange)="filterTypeChange($event)">
+        订单状态
+      </th>
+      <th nzShowSort [(nzSort)]="sortMap.price" (nzSortChange)="sort('orderTime',$event)">
+        下单时间
+        <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+          <i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>
+          <div class="custom-filter-dropdown">
+            <nz-range-picker [(ngModel)]="dateRange"></nz-range-picker>
+            <button nz-button [nzType]="'primary'" (click)="print()">搜索</button>
+          </div>
+        </nz-dropdown>
+      </th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of nzTable.data">
+      <td>{{data.orderId}}</td>
+      <td>{{data.courseId}}</td>
+      <td>{{data.username}}</td>
+      <td>{{data.price}}</td>
+      <td>{{data.status}}</td>
+      <td>{{data.orderTime}}</td>
+      <td><i style="margin-left: 30px;margin-right: 30px; cursor: pointer" class="anticon anticon-check" (click)="checkReservation(data)"></i></td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>
+
+

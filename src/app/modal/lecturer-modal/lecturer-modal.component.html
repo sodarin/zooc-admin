@@ -1,0 +1,41 @@
+<div>
+  <form nz-form [formGroup]="lecturerForm">
+    <nz-form-item>
+      <nz-form-control style="width: 100%">
+        <nz-input-group>
+          <input type="text" nz-input formControlName="name" placeholder="请输入讲师名称">
+        </nz-input-group>
+        <nz-form-explain *ngIf="lecturerForm.get('name').dirty && lecturerForm.get('name').errors">请输入讲师名称</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <div class="upload-meta-data" style="margin-top: 20px; background: white; width: 100%">
+      <div class="upload-picture">
+        <nz-upload
+          nzAction="https://jsonplaceholder.typicode.com/posts/"
+          nzListType="picture-card"
+          [(nzFileList)]="fileList"
+          [nzShowButton]="fileList.length < 3"
+          [nzPreview]="handlePreview">
+          <i class="anticon anticon-plus"></i>
+          <div class="upload-text">Upload</div>
+        </nz-upload>
+        <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
+                  (nzOnCancel)="previewVisible=false">
+          <ng-template #modalContent>
+            <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }"/>
+          </ng-template>
+        </nz-modal>
+      </div>
+    </div>
+
+    <nz-form-item style="width: 100%">
+      <nz-form-control style="width: 100%">
+        <nz-input-group>
+          <textarea type="text" nz-input formControlName="introduction" placeholder="请输入讲师简介"></textarea>
+        </nz-input-group>
+        <nz-form-explain *ngIf="lecturerForm.get('introduction').dirty && lecturerForm.get('introduction').errors">请输入讲师简介</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>

@@ -1,0 +1,34 @@
+<nz-layout>
+  <nz-header>
+    <span style="color: #ffffff; font-size: 18px;">Zooc后台管理系统</span>
+  </nz-header>
+  <nz-content>
+    <form nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="login()">
+      <nz-card style="width: 400px;" [nzBordered]="false" nzTitle="登录">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group nzPrefixIcon="anticon anticon-user">
+              <input type="text" nz-input formControlName="id" placeholder="请输入管理员账号">
+            </nz-input-group>
+            <nz-form-explain *ngIf="loginForm.get('id').dirty && loginForm.get('id').errors">请输入管理员账号</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group nzPrefixIcon="anticon anticon-lock">
+              <input type="password" nz-input formControlName="password" placeholder="请输入密码">
+            </nz-input-group>
+            <nz-form-explain *ngIf="loginForm.get('password').dirty && loginForm.get('password').errors">请输入密码</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control>
+            <button nz-button [disabled]="!loginForm.valid" class="login-form-button" [nzType]="'primary'">登录</button>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-card>
+    </form>
+  </nz-content>
+</nz-layout>

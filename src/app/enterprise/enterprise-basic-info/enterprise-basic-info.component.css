@@ -1,0 +1,42 @@
+div.ant-list-item-meta-description {
+  font-size: 16px !important;
+}
+.introduction {
+  display: block;
+  width: 80%;
+  word-wrap: break-word;
+  word-break: normal;
+}
+
+:host ::ng-deep .anticon-plus {
+  font-size: 32px;
+  color: #999;
+}
+:host ::ng-deep .upload-text {
+  margin-top: 8px;
+  color: #666;
+}
+.upload-picture > .title, .upload-video > .title, .editor > .title {
+  padding-top: 20px;
+  margin-left: 20px;
+}
+:host ::ng-deep .upload-picture .ant-upload-select{
+  width: 200px;
+  height: 200px;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+:host ::ng-deep .upload-picture .ant-upload-list-item {
+  width: 200px;
+  height: 200px;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+:host ::ng-deep .upload-video nz-upload {
+  display: block;
+  width: 32%;
+  margin-left: 20px;
+}
+:host ::ng-deep .ant-upload.ant-upload-drag { height: 180px; }
+

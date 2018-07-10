@@ -1,0 +1,35 @@
+<div class="content">
+  <button nz-button (click)="addNewData()" class="editable-add-btn">添加新讲师</button>
+  <nz-table
+    #editRowTable
+    nzBordered
+    [nzFrontPagination]="false"
+    [nzData]="lecturers"
+    [nzLoading]="loading"
+    [nzTotal]="total"
+    [(nzPageIndex)]="pageIndex"
+    [(nzPageSize)]="pageSize"
+    (nzPageIndexChange)="searchData()">
+    <thead>
+    <tr>
+      <th nzWidth="30%">讲师名字</th>
+      <th>讲师图片</th>
+      <th>讲师简介</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of editRowTable.data">
+      <td>{{data.name}}</td>
+      <td><img style="width: 104px; height: 104px" [src]="data.photoUrl"/></td>
+      <td>{{data.introduction}}</td>
+      <td>
+        <i style="cursor: pointer; margin-right: 20px;" class="anticon anticon-edit" (click)="edit(data)"></i>
+        <nz-popconfirm [nzTitle]="'确认删除？'" (nzOnConfirm)="deleteRow(data.lecturerId)">
+          <i style="cursor: pointer;" class="anticon anticon-close" nz-popconfirm></i>
+        </nz-popconfirm>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>

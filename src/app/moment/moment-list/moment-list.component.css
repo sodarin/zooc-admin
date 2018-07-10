@@ -1,0 +1,27 @@
+.introduction {
+  display: inline-block;
+  width: 80%;
+  word-wrap: break-word;
+  word-break: normal;
+  font-size: 16px;
+  color: rgba(0, 0, 0, .75);
+}
+
+.list {
+  background: white;
+  margin: 20px;
+}
+
+.anticon-check, .anticon-edit {
+  margin-left: 40px;
+}
+
+.anticon-check:hover, .anticon-edit:hover {
+  cursor: pointer;
+  color: #1890ff;
+}
+.detail {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}

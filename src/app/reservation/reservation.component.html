@@ -1,0 +1,61 @@
+
+<div class="content">
+  <nz-table #nzTable [nzData]="displayData">
+    <thead>
+    <tr>
+      <th>
+        预约课程编号
+        <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+          <i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>
+          <div class="custom-filter-dropdown">
+            <input type="text" nz-input placeholder="搜索订单编号" [(ngModel)]="searchValue">
+            <button nz-button [nzType]="'primary'" (click)="search()">搜索</button>
+          </div>
+        </nz-dropdown>
+      </th>
+      <th>
+        预约课程标题
+      </th>
+      <th>
+        用户昵称
+        <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+          <i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>
+          <div class="custom-filter-dropdown">
+            <input type="text" nz-input placeholder="搜索用户昵称" [(ngModel)]="searchValue">
+            <button nz-button [nzType]="'primary'" (click)="search()">搜索</button>
+          </div>
+        </nz-dropdown>
+      </th>
+      <th nzShowFilter [nzFilters]="filterType" (nzFilterChange)="filterTypeChange($event)">
+        订单状态
+      </th>
+      <th nzShowSort [(nzSort)]="sortMap.price" (nzSortChange)="sort('reservationTime',$event)">
+        预约时间
+        <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+          <i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>
+          <div class="custom-filter-dropdown">
+            <nz-range-picker [(ngModel)]="dateRange"></nz-range-picker>
+            <button nz-button [nzType]="'primary'" (click)="print()">搜索</button>
+          </div>
+        </nz-dropdown>
+      </th>
+      <th>
+        留言
+      </th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of nzTable.data">
+      <td>{{data.freeTrialId}}</td>
+      <td>{{data.title}}</td>
+      <td>{{data.username}}</td>
+      <td>{{data.status}}</td>
+      <td>{{data.reservationTime}}</td>
+      <td>{{data.message}}</td>
+      <td><i style="margin-left: 30px;margin-right: 30px; cursor: pointer" class="anticon anticon-check" (click)="checkReservation(data)"></i></td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>
+

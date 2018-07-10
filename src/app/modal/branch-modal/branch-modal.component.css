@@ -1,0 +1,11 @@
+.position {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+nz-input-number {
+  width: 100%;
+}
+.empty-space {
+  flex-grow: 1;
+}
