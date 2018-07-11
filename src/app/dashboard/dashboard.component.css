@@ -11,3 +11,9 @@ nz-card {
 .item {
   flex-grow: 1;
 }
+:host ::ng-deep .ant-fullcalendar-header nz-select {
+  margin: 0 6px;
+}
+:host ::ng-deep .ant-fullcalendar-date, .ant-fullcalendar-month {
+  height: 48px;
+}
