@@ -68,7 +68,7 @@ export class CourseModalComponent implements OnInit {
       .subscribe(categoryResult => {
         this.categories = categoryResult;
         for (let i = 0; i < this.categories.length; i++) {
-          if (this.categories[i].name == this.item.categoryName){
+          if (this.categories[i].name == this.item.categoryName) {
             this.selectedValue = i + 1;
             break;
           }
@@ -81,18 +81,20 @@ export class CourseModalComponent implements OnInit {
     await this.lecturerService$.getLecturersWithoutPageIndex(this.loginService$.currentAdmin.enterpriseId)
        .subscribe(lecturerResult => {
          this.lecturers = lecturerResult.list;
-       })
+       });
 
   }
 
 
 
   submit() {
-    if (this.courseForm.value.title == ''|| this.courseForm.value.price == '' || this.selectedValue == '' || this.courseForm.value.address == ''){
+    if (this.courseForm.value.title == '' || this.courseForm.value.price == '' || this.courseForm.value.address == '') {
       console.log(this.courseForm.value);
       this.message.error('内容不能为空');
-    }else{
-      this.result = new ElaborateCourse(this.item.courseId, this.loginService$.currentAdmin.enterpriseId, this.item.imgUrl, this.courseForm.value.name,  this.courseForm.value.price, this.courseForm.value.type, this.courseForm.value.statusDesc, this.detailContent);
+    } else {
+      this.result = new ElaborateCourse(
+        this.item.courseId, this.loginService$.currentAdmin.enterpriseId, this.item.imgUrl, this.courseForm.value.name,
+        this.courseForm.value.price, this.courseForm.value.type, this.courseForm.value.statusDesc, this.detailContent);
       this.modal.destroy(this.result);
     }
   }
@@ -106,6 +108,6 @@ export class CourseModalComponent implements OnInit {
   handlePreview = (file: UploadFile) => {
     this.previewImage = file.url || file.thumbUrl;
     this.previewVisible = true;
-  };
+  }
 
 }
