@@ -1,0 +1,20 @@
+<div class="course-offering" style="width: 100%;">
+    <div style="width: 48%;">
+      <input [formControl]="branchNameControl" [value]="courseOffering.branchName? courseOffering.branchName: ''" nz-input [nzAutocomplete]="auto">
+      <nz-autocomplete nzBackfill #auto>
+        <nz-auto-option *ngFor="let branch of branches" [nzValue]="branch.name">
+          {{branch.name}}
+        </nz-auto-option>
+      </nz-autocomplete>
+    </div>
+  <div class="empty-space"></div>
+    <div style="width: 48%">
+      <input [formControl]="lecturerControl" [value]="courseOffering.lecturerName? courseOffering.lecturerName: ''" nz-input [nzAutocomplete]="lecturerAuto">
+      <nz-autocomplete nzBackfill #lecturerAuto>
+        <nz-auto-option *ngFor="let lecturer of lecturers" [nzValue]="lecturer.name">
+          {{lecturer.name}}
+        </nz-auto-option>
+      </nz-autocomplete>
+    </div>
+  <span class="delete-input" (click)="deleteInput(courseOffering.id)"><i class="anticon anticon-close"></i></span>
+</div>

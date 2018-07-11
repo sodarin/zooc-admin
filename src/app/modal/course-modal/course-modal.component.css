@@ -1,8 +1,8 @@
-.course-offering {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
+.add {
+  cursor: pointer;
 }
-.empty-space {
-  flex-grow: 1;
+.add:hover {
+  color: #1890ff;
 }
+
+

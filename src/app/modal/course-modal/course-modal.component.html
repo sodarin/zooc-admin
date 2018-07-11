@@ -49,30 +49,14 @@
       </nz-form-control>
     </nz-form-item>
 
-    <nz-form-item class="course-offering" *ngFor="let address of courseOfferings" style="width: 100%;">
-      <nz-form-control style="width: 48%">
-        <nz-input-group>
-          <input [value]="address.branchName" nz-input [nzAutocomplete]="auto">
-          <nz-autocomplete nzBackfill #auto>
-            <nz-auto-option *ngFor="let branch of branches" [nzValue]="branch.name">
-              {{branch.name}}
-            </nz-auto-option>
-          </nz-autocomplete>
-        </nz-input-group>
-      </nz-form-control>
-      <div class="empty-space"></div>
-      <nz-form-control style="width: 48%">
-        <nz-input-group>
-          <input [value]="address.lecturerName" nz-input [nzAutocomplete]="lecturerAuto">
-          <nz-autocomplete nzBackfill #lecturerAuto>
-            <nz-auto-option *ngFor="let lecturer of lecturers" [nzValue]="lecturer.name">
-              {{lecturer.name}}
-            </nz-auto-option>
-          </nz-autocomplete>
-        </nz-input-group>
-      </nz-form-control>
-    </nz-form-item>
+    <nz-divider nzDashed [nzText]="text">
+      <ng-template #text><span class="add" (click)="addInput()"><i class="anticon anticon-plus"></i>Add</span></ng-template>
+    </nz-divider>
 
-    <app-ckeditor [ckeditorContent]="detailContent"></app-ckeditor>
+    <app-course-offering-input *ngFor="let courseOffering of courseOfferings" [branches]="branches" [lecturers]="lecturers" [courseOffering]="courseOffering" (deleteEmit)="deleteInputById($event)" (branchEmit)="changeBranch($event)" (lecturerEmit)="changeLecturer($event)"></app-course-offering-input>
+
+    <div style="height: 10px; width: 100%"></div>
+
+    <app-ckeditor [ckeditorContent]="detailContent" (detailEmit)="receiveDetail($event)"></app-ckeditor>
   </form>
 </div>

@@ -1,0 +1,20 @@
+.course-offering {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-bottom: 5px;
+}
+.empty-space {
+  flex-grow: 1;
+}
+.delete-input {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.delete-input i {
+  cursor: pointer;
+}
+.delete-input i:hover {
+  color: #1890ff;
+}
