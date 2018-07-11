@@ -14,7 +14,7 @@ import {RefundComponent} from './refund/refund.component';
 import {MomentComponent} from './moment/moment.component';
 
 const routes: Routes = [
-  {path: '', redirectTo:'/login', pathMatch: 'full'},
+  {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'home', component: HomeComponent, children: [
       {path: '', component: DashboardComponent},
@@ -35,4 +35,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule{}
+export class AppRoutingModule {}
