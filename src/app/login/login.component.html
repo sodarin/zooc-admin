@@ -1,6 +1,10 @@
 <nz-layout>
-  <nz-header>
-    <span style="color: #ffffff; font-size: 18px;">Zooc后台管理系统</span>
+  <ul id="background" class="background">
+    <li style="background-image: url('../../assets/background-image/login-page-background.jpg')"></li>
+    <li style="background-color: rgba(55, 55, 55, 0.35)"></li>
+  </ul>
+  <nz-header class="login-header">
+    <span>Zooc 后台管理系统</span>
   </nz-header>
   <nz-content>
     <form nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="login()">
@@ -8,18 +12,18 @@
         <nz-form-item>
           <nz-form-control>
             <nz-input-group nzPrefixIcon="anticon anticon-user">
-              <input type="text" nz-input formControlName="id" placeholder="请输入管理员账号">
+              <input type="text" nz-input formControlName="id" placeholder="管理员编号">
             </nz-input-group>
-            <nz-form-explain *ngIf="loginForm.get('id').dirty && loginForm.get('id').errors">请输入管理员账号</nz-form-explain>
+            <nz-form-explain *ngIf="loginForm.get('id').dirty && loginForm.get('id').errors">请输入管理员编号。</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
           <nz-form-control>
             <nz-input-group nzPrefixIcon="anticon anticon-lock">
-              <input type="password" nz-input formControlName="password" placeholder="请输入密码">
+              <input type="password" nz-input formControlName="password" placeholder="密码">
             </nz-input-group>
-            <nz-form-explain *ngIf="loginForm.get('password').dirty && loginForm.get('password').errors">请输入密码</nz-form-explain>
+            <nz-form-explain *ngIf="loginForm.get('password').dirty && loginForm.get('password').errors">请输入密码。</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
 

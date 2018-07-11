@@ -86,7 +86,7 @@ export class CourseModalComponent implements OnInit {
       .subscribe(categoryResult => {
         this.categories = categoryResult;
         for (let i = 0; i < this.categories.length; i++) {
-          if (this.categories[i].name == this.item.categoryName){
+          if (this.categories[i].name == this.item.categoryName) {
             this.selectedValue = i + 1;
             break;
           }
@@ -136,7 +136,7 @@ export class CourseModalComponent implements OnInit {
   handlePreview = (file: UploadFile) => {
     this.previewImage = file.url || file.thumbUrl;
     this.previewVisible = true;
-  };
+  }
 
   addInput() {
     this.courseOfferings.push(new CourseOffering(this.courseOfferings.length + 1));

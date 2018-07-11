@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
   }
 
-  onValueChange(value: Date): void{
+  onValueChange(value: Date): void {
     this.date = value;
   }
 

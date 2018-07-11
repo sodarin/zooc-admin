@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  adminEnum = AdminEnum;
   isCollapsed = false;
   triggerTemplate = null;
   @ViewChild('trigger') customTrigger: TemplateRef<void>;
@@ -22,10 +22,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.admin = this.loginService$.currentAdmin;
-    if (!this.admin){
-      this.admin = new Admin(2, 'admin', '1', AdminEnum.ENTERPRISE, 1);
-    }
-    this.message.create('success', `欢迎回来，${this.admin.username}`);
+    // if (!this.admin) {
+    //   this.admin = new Admin(2, 'admin', '1', AdminEnum.ENTERPRISE, 1);
+    // }
+    this.message.create('success', `欢迎回来，${this.admin.username}！`);
   }
 
 

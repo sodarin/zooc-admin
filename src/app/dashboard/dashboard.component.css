@@ -7,7 +7,14 @@ nz-card {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  margin-top: 12px;
 }
 .item {
   flex-grow: 1;
+}
+:host ::ng-deep .ant-fullcalendar-header nz-select {
+  margin: 0 6px;
+}
+:host ::ng-deep .ant-fullcalendar-date, .ant-fullcalendar-month {
+  height: 48px;
 }
