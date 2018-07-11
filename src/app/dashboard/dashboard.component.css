@@ -7,6 +7,7 @@ nz-card {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  margin-top: 12px;
 }
 .item {
   flex-grow: 1;
