@@ -21,10 +21,10 @@ nz-layout {
 nz-header {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 nz-avatar {
-  margin-right: 80px;
-  margin-top: 10px;
+  margin-right: 36px;;
   cursor: pointer;
 }
 .empty-space {
