@@ -5,7 +5,7 @@
 
     </div>
     <ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu *ngIf="admin.type == 'ENTERPRISE'">
+      <li nz-submenu *ngIf="admin.type == adminEnum.ENTERPRISE">
         <span title><i class="anticon anticon-shop"></i><span class="nav-text">企业管理</span></span>
         <ul>
           <li nz-menu-item (click)="navToNewPage('/home/enterprise-basic-info')">企业基本信息管理</li>
@@ -14,7 +14,7 @@
         </ul>
       </li>
 
-      <li nz-submenu *ngIf="admin.type == 'SYSTEM'">
+      <li nz-submenu *ngIf="admin.type == adminEnum.SYSTEM">
         <span title><i class="anticon anticon-shop"></i><span class="nav-text">企业与课程管理</span></span>
         <ul>
           <li nz-menu-item (click)="navToNewPage('/home/enterprise-basic-info')">企业列表</li>
@@ -22,17 +22,17 @@
         </ul>
       </li>
 
-      <li nz-submenu *ngIf="admin.type == 'ENTERPRISE'">
+      <li nz-submenu *ngIf="admin.type == adminEnum.ENTERPRISE">
         <span title><i class="anticon anticon-book"></i><span class="nav-text">课程管理</span></span>
         <ul>
           <li nz-menu-item (click)="navToNewPage('/home/course')">精品课程管理</li>
           <li nz-menu-item (click)="navToNewPage('/home/free-trial')">预约课程管理</li>
         </ul>
       </li>
-      <li nz-menu-item *ngIf="admin.type == 'SYSTEM'">
+      <li nz-menu-item *ngIf="admin.type == adminEnum.SYSTEM">
         <span><i class="anticon anticon-user"></i><span class="nav-text">用户管理</span></span>
       </li>
-      <li nz-submenu *ngIf="admin.type == 'ENTERPRISE'">
+      <li nz-submenu *ngIf="admin.type == adminEnum.ENTERPRISE">
         <span title><i class="anticon anticon-shopping-cart"></i><span class="nav-text">订单管理</span></span>
         <ul>
           <li nz-menu-item (click)="navToNewPage('/home/order')">订单管理</li>
@@ -40,7 +40,7 @@
           <li nz-menu-item (click)="navToNewPage('/home/refund')">退款处理</li>
         </ul>
       </li>
-      <li nz-menu-item *ngIf="admin.type == 'ENTERPRISE'" (click)="navToNewPage('/home/moment')">
+      <li nz-menu-item *ngIf="admin.type == adminEnum.ENTERPRISE" (click)="navToNewPage('/home/moment')">
         <span><i class="anticon anticon-wechat"></i><span class="nav-text">朋友圈管理</span></span>
       </li>
     </ul>
@@ -49,7 +49,7 @@
     <nz-header style="background: #ffffff; padding: 0;">
       <i class="anticon trigger" [class.anticon-menu-fold]="!isCollapsed" [class.anticon-menu-unfold]="isCollapsed" (click)="isCollapsed=!isCollapsed"></i>
       <div class="empty-space"></div>
-      <span class="header-title" style="color: rgba(0, 0, 0, .8); font-size: 18px; cursor: pointer;">Zooc后台管理系统</span>
+      <span class="header-title" style="color: rgba(0, 0, 0, .8); font-size: 18px; cursor: pointer;">Zooc 后台管理系统</span>
       <div class="empty-space"></div>
       <nz-avatar nzSize="large" nzIcon="anticon anticon-user" nz-popover [nzContent]="userList"></nz-avatar>
     </nz-header>
