@@ -1,3 +1,4 @@
+@import "../../theme";
 @deep-blue: rgb(0, 21, 41);
 @header-transparency: 75%;
 
@@ -40,13 +41,15 @@ nz-content {
 }
 .login-header span {
   color: white;
-  font-size: 18px;
+  font-size: @font-size-lg + 2px;
 }
 :host ::ng-deep .ant-card-head {
   background-color: @deep-blue;
 }
 :host ::ng-deep .ant-card-head-title {
   color: white;
+  display: flex;
+  justify-content: center;
 }
 :host ::ng-deep .ant-form-item {
   margin: 0;
