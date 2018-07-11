@@ -3,7 +3,7 @@ import {ElaborateCourse} from '../../../model/ElaborateCourse.model';
 import {CourseType} from '../../../model/enum/CourseTypeEnum';
 import {Observable} from 'rxjs';
 import {StatusType} from '../../../model/enum/StatusTypeEnum';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,8 @@ export class ElaborateCourseService {
   constructor(private _http: HttpClient) { }
 
 
-  getElaborateCourseByEnterpriseId(enterpriseId: number): Observable<any> {
-    return this._http.get(`/api/v1/enterprise/${enterpriseId}/course/list`)
+  getElaborateCourseByEnterpriseId(enterpriseId: number, pageSize: number, pageIndex: number): Observable<any> {
+    return this._http.get(`/api/v1/enterprise/${enterpriseId}/course/list?usePagination=true&targetPage=${pageIndex}&pageSize=${pageSize}`)
   }
 
   getCategories(): Observable<any> {
@@ -24,6 +24,69 @@ export class ElaborateCourseService {
 
   getCourseOfferings(courseId: number): Observable<any> {
     return this._http.get(`/api/v1/course/${courseId}/offering/list`);
+  }
+
+  getCourseDetail(courseId: number): Observable<any> {
+    return this._http.get(`/api/v1/course/detail/${courseId}`)
+  }
+
+  deleteCourseOffering(courseOfferingId: number): Observable<any> {
+    return this._http.delete(`/api/v1/offering/${courseOfferingId}`)
+  }
+
+  updateCourseOfferings(courseOffering: CourseOffering, courseId: number): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this._http.put(`/api/v1/offering/${courseOffering.courseOfferingId}`, {
+      courseId: courseId,
+      branchId: courseOffering.branchId,
+      lecturerId: courseOffering.lecturerId
+    }, httpOptions)
+  }
+
+  createCourseOfferings(courseOffering: CourseOffering, courseId: number): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this._http.post(`/api/v1/course/${courseId}/offering`, {
+      branchId: courseOffering.branchId,
+      lecturerId: courseOffering.lecturerId
+    }, httpOptions)
+  }
+
+  updateCourseInfo(courseInfo: any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this._http.put(`/api/v1/course/${courseInfo.courseId}`, {
+      name: courseInfo.name,
+      detail: courseInfo.detail,
+      imgUrl: courseInfo.imgUrl,
+      categoryId: courseInfo.categoryId,
+      price: courseInfo.price
+    }, httpOptions)
+  }
+
+  createNewCourse(courseInfo: any, enterpriseId: number): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this._http.post(`/api/v1/enterprise/${enterpriseId}/course`, {
+      name: courseInfo.name,
+      detail: courseInfo.detail,
+      imgUrl: courseInfo.imgUrl,
+      categoryId: courseInfo.categoryId,
+      price: courseInfo.price
+    }, httpOptions)
   }
 }
 
@@ -45,11 +108,12 @@ export class CourseDetail {
 
 export class CourseOffering {
   constructor(
-    public courseOfferingId: number,
-    public branchId: number,
-    public branchName: string,
-    public lecturerId: number,
-    public lecturerName: string
+    public id: number,
+    public courseOfferingId?: number,
+    public branchId?: string,
+    public branchName?: string,
+    public lecturerId?: string,
+    public lecturerName?: string
   ) {}
 }
 

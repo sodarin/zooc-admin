@@ -35,7 +35,7 @@ export class EnterpriseLecturerInfoComponent implements OnInit {
       .subscribe(result => {
         this.loading = false;
         this.total = result.total;
-        this.totalPage = result.totalNumPages;
+        this.totalPage = this.total / this.pageSize;
         this.pageIndex = pageIndex;
         this.lecturers = result.list
       });

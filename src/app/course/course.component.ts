@@ -35,20 +35,45 @@ export class CourseComponent implements OnInit {
   sortName = null;
   sortValue = null;
 
+
+  pageIndex = 1;
+  pageSize = 5;
+  total = 1;
+  loading = true;
+  totalPage = 1;
+
   constructor(private loginService$: LoginService, private elaborateCourse$: ElaborateCourseService, private branchService$: BranchService, private message: NzMessageService, private modalService: NzModalService) { }
 
   ngOnInit() {
-    this.elaborateCourse$.getElaborateCourseByEnterpriseId(this.loginService$.currentAdmin.enterpriseId)
-      .subscribe(result => {
-        this.courses = result.list;
-        this.displayData = this.courses;
-      });
+    this.searchData();
     this.filterType = [
       {text: 'JAVA', value: 'JAVA'},
       {text: 'HTML', value: 'HTML'},
       {text: 'C++', value: 'C++'}
       ];
   }
+
+  searchData(reset: boolean = false, pageIndex: number = this.pageIndex) {
+    // this.elaborateCourse$.getElaborateCourseByEnterpriseId(this.loginService$.currentAdmin.enterpriseId)
+    //   .subscribe(result => {
+    //     this.courses = result.list;
+    //     this.displayData = this.courses;
+    //   });
+    if(reset) {
+      this.pageIndex = 1;
+    }
+    this.loading = true;
+    this.elaborateCourse$.getElaborateCourseByEnterpriseId(this.loginService$.currentAdmin.enterpriseId, this.pageSize, pageIndex)
+      .subscribe(result => {
+        this.loading = false;
+        this.total = result.total;
+        this.totalPage = this.total / this.pageSize;
+        this.pageIndex = pageIndex;
+        this.courses = result.list;
+        this.displayData = this.courses;
+      });
+  }
+
 
   deleteRow(i: number): void {
     const dataSet = this.courses.filter(d => d.courseId !== i);
@@ -109,26 +134,47 @@ export class CourseComponent implements OnInit {
     });
     modal.afterClose.subscribe(result => {
       if (result){
-        console.log(result)
-        for(let i = 0; i < this.courses.length; i++){
-          if (this.courses[i].courseId == result.courseId){
-            console.log(result);
-            this.courses[i] = result;
+        console.log(result);
+        result.courseOfferings.forEach(item => {
+          if (item.courseOfferingId == undefined) {
+            this.elaborateCourse$.createCourseOfferings(item, result.courseId).subscribe();
+          }else{
+            this.elaborateCourse$.updateCourseOfferings(item, result.courseId).subscribe();
           }
-        }
-        this.message.success('修改课程信息成功!');
-        this.deleteRow(-1);
+        });
+        this.elaborateCourse$.updateCourseInfo({
+          courseId: result.courseId,
+          name: result.name,
+          detail: result.detail,
+          imgUrl: result.imgUrl,
+          categoryId: result.categoryId,
+          price: result.price
+        }).subscribe(result =>{
+          this.searchData();
+          this.message.success('修改课程信息成功');
+        }, error2 => {
+          this.message.error(error2.error);
+        })
       }
     });
   }
 
   addNewData() {
-    //const item = new ElaborateCourse(`${this.courses.length+1}`, 1, '', '',  0, CourseType.JAVA, '');
+    const item = {
+      name: '',
+      detail: '',
+      imgUrl: 'https://img.moegirl.org/common/e/e0/9694490.jpg',
+      categoryName: 'C++',
+      price: '',
+      courseOfferings: [
+        {id: 1}
+      ]
+    };
     const modal = this.modalService.create({
       nzTitle: '新增课程',
       nzContent: CourseModalComponent,
       nzComponentParams: {
-        //item: item
+        item: item
       },
       nzFooter: [{
         label: '提交',
@@ -140,10 +186,25 @@ export class CourseComponent implements OnInit {
     });
     modal.afterClose.subscribe(result => {
       if (result){
-        this.courses.push(result);
-        this.message.success('添加课程信息成功!');
-        this.deleteRow(-1);
+        console.log(result);
+        this.elaborateCourse$.createNewCourse({
+          name: result.name,
+          detail: result.detail,
+          imgUrl: result.imgUrl,
+          categoryId: result.categoryId,
+          price: result.price
+        }, this.loginService$.currentAdmin.enterpriseId)
+          .subscribe(next => {
+            result.courseOfferings.forEach(item => this.elaborateCourse$.createCourseOfferings(item, next).subscribe());
+            this.searchData(false, this.totalPage);
+            this.message.success('新增课程成功');
+          }, error2 => {
+            this.message.error(error2.error);
+          })
       }
+      this.courses.push(result);
+      this.message.success('添加课程信息成功!');
+      this.deleteRow(-1);
     });
   }
 

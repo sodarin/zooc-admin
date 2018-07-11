@@ -35,6 +35,7 @@ import { MomentComponent } from './moment/moment.component';
 import { MomentListComponent } from './moment/moment-list/moment-list.component';
 import { MomentModalComponent } from './modal/moment-modal/moment-modal.component';
 import {NgxAmapModule} from 'ngx-amap';
+import { CourseOfferingInputComponent } from './modal/course-modal/course-offering-input/course-offering-input.component';
 
 registerLocaleData(zh);
 
@@ -59,6 +60,7 @@ registerLocaleData(zh);
     MomentComponent,
     MomentListComponent,
     MomentModalComponent,
+    CourseOfferingInputComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,7 +90,8 @@ registerLocaleData(zh);
     BranchModalComponent,
     LecturerModalComponent,
     CourseModalComponent,
-    MomentModalComponent
+    MomentModalComponent,
+    CourseOfferingInputComponent
   ],
   bootstrap: [AppComponent]
 })
