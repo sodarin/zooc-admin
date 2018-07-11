@@ -38,7 +38,7 @@ export class CourseModalComponent implements OnInit {
   previewImage = '';
   previewVisible = false;
 
-  selectedValue = '';
+  selectedValue: number;
 
   constructor(private fb: FormBuilder,
               private message: NzMessageService,
@@ -55,31 +55,32 @@ export class CourseModalComponent implements OnInit {
       type: [this.item.categoryName],
       statusDesc: [this.item.statusDesc, [Validators.required]]
     });
-    this.selectedValue = this.item.categoryName;
-    console.log(this.selectedValue);
     this.fileList = [
       {
         status: 'done',
         url: this.item.imgUrl
       }
     ];
-    this.selectedValue = this.item.categoryName;
     this.detailContent = this.item.detail;
     await this.elaborateCourseService$.getCourseOfferings(this.item.courseId)
       .subscribe(result => this.courseOfferings = result.list);
-     await this.elaborateCourseService$.getCategories()
+    await this.elaborateCourseService$.getCategories()
       .subscribe(categoryResult => {
-        console.log(`category: ${categoryResult}`);
         this.categories = categoryResult;
-        console.log(`category: ${this.categories}`);
+        for (let i = 0; i < this.categories.length; i++) {
+          if (this.categories[i].name == this.item.categoryName){
+            this.selectedValue = i + 1;
+            break;
+          }
+        }
       });
     await this.branchService$.getBranchById(this.loginService$.currentAdmin.enterpriseId)
        .subscribe(branchResult => {
-         this.branches = Object.assign([], branchResult.list);
+         this.branches = branchResult.list;
        });
     await this.lecturerService$.getLecturersWithoutPageIndex(this.loginService$.currentAdmin.enterpriseId)
        .subscribe(lecturerResult => {
-         this.lecturers = Object.assign([], lecturerResult.list);
+         this.lecturers = lecturerResult.list;
        })
 
   }
