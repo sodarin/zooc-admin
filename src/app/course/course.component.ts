@@ -27,7 +27,7 @@ export class CourseComponent implements OnInit {
 
   searchType = [];
   sortMap = {
-    title   : null,
+    name   : null,
     price   :null,
     type    : null,
   };
@@ -67,7 +67,7 @@ export class CourseComponent implements OnInit {
       .subscribe(result => {
         this.loading = false;
         this.total = result.total;
-        this.totalPage = this.total / this.pageSize;
+        this.totalPage = Math.ceil(this.total / this.pageSize);
         this.pageIndex = pageIndex;
         this.courses = result.list;
         this.displayData = this.courses;
@@ -202,9 +202,6 @@ export class CourseComponent implements OnInit {
             this.message.error(error2.error);
           })
       }
-      this.courses.push(result);
-      this.message.success('添加课程信息成功!');
-      this.deleteRow(-1);
     });
   }
 

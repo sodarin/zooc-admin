@@ -1,0 +1,90 @@
+<div>
+  <form nz-form [formGroup]="trialForm">
+    <nz-form-item>
+      <nz-form-control style="width: 100%">
+        <nz-input-group>
+          <input type="text" nz-input formControlName="name" placeholder="请输入课程名称">
+        </nz-input-group>
+        <nz-form-explain *ngIf="trialForm.get('name').dirty && trialForm.get('name').errors">请输入课程名称</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <div class="upload-meta-data" style="margin-top: 20px; background: white; width: 100%">
+      <div class="upload-picture">
+        <nz-upload
+          nzAction="https://jsonplaceholder.typicode.com/posts/"
+          nzListType="picture-card"
+          [(nzFileList)]="fileList"
+          [nzShowButton]="fileList.length < 3"
+          [nzPreview]="handlePreview">
+          <i class="anticon anticon-plus"></i>
+          <div class="upload-text">Upload</div>
+        </nz-upload>
+        <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
+                  (nzOnCancel)="previewVisible=false">
+          <ng-template #modalContent>
+            <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }"/>
+          </ng-template>
+        </nz-modal>
+      </div>
+    </div>
+
+    <nz-form-item>
+      <nz-form-control style="width: 100%;">
+        <nz-input-group>
+          <nz-select formControlName="status" style="width: 100%" [(ngModel)]="selectedStatus" nzAllowClear [nzPlaceHolder]="'更改课程状态'">
+            <nz-option [nzValue]="'AVAILABLE'" [nzLabel]="'进行中'"></nz-option>
+            <nz-option [nzValue]="'OFF'" [nzLabel]="'已下线'"></nz-option>
+            <nz-option [nzValue]="'IN_REVIEW'" [nzLabel]="'审核中'"></nz-option>
+          </nz-select>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control style="width: 100%">
+        <nz-input-group>
+          <nz-select formControlName="type" style="width: 100%" [(ngModel)]="selectedType" nzAllowClear nzPlaceHolder="选择课程类别">
+            <nz-option *ngFor="let category of categories" [nzValue]="category.categoryId" [nzLabel]="category.name"></nz-option>
+          </nz-select>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="trial-offering" style="width: 100%;">
+      <nz-form-control style="width: 48%;">
+        <nz-input-group>
+          <input formControlName="branchNameControl" nz-input [nzAutocomplete]="auto">
+        </nz-input-group>
+        <nz-autocomplete nzBackfill #auto>
+          <nz-auto-option *ngFor="let branch of branches" [nzValue]="branch.name">
+            {{branch.name}}
+          </nz-auto-option>
+        </nz-autocomplete>
+      </nz-form-control>
+      <div class="empty-space"></div>
+      <nz-form-control style="width: 48%">
+        <nz-input-group>
+          <input formControlName="lecturerControl" nz-input [nzAutocomplete]="lecturerAuto">
+        </nz-input-group>
+        <nz-autocomplete nzBackfill #lecturerAuto>
+          <nz-auto-option *ngFor="let lecturer of lecturers" [nzValue]="lecturer.name">
+            {{lecturer.name}}
+          </nz-auto-option>
+        </nz-autocomplete>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control [nzSm]="24" [nzLg]="24" [nzMd]="24">
+        <nz-date-picker style="width: 100%" formControlName="datePicker"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+
+
+    <div style="height: 10px; width: 100%"></div>
+
+    <app-ckeditor [ckeditorContent]="detailContent" (detailEmit)="receiveDetail($event)"></app-ckeditor>
+  </form>
+</div>
+

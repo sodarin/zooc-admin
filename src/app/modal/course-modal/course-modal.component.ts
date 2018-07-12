@@ -51,8 +51,7 @@ export class CourseModalComponent implements OnInit {
               private loginService$: LoginService,
               private elaborateCourseService$: ElaborateCourseService,
               private branchService$: BranchService,
-              private lecturerService$: LecturerService,
-              private cfr: ComponentFactoryResolver) { }
+              private lecturerService$: LecturerService) { }
 
    async ngOnInit() {
     this.courseForm = this.fb.group({
@@ -136,7 +135,7 @@ export class CourseModalComponent implements OnInit {
   handlePreview = (file: UploadFile) => {
     this.previewImage = file.url || file.thumbUrl;
     this.previewVisible = true;
-  }
+  };
 
   addInput() {
     this.courseOfferings.push(new CourseOffering(this.courseOfferings.length + 1));
