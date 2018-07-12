@@ -22,9 +22,10 @@ nz-header {
   display: flex;
   flex-direction: row;
   align-items: center;
+  box-shadow: 0 4px 13px -3px rgba(0, 0, 0, 0.10196);
 }
 nz-avatar {
-  margin-right: 36px;;
+  margin-right: 36px;
   cursor: pointer;
 }
 .empty-space {

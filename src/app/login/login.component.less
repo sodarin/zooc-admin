@@ -1,6 +1,8 @@
 @import "../../theme";
 @deep-blue: rgb(0, 21, 41);
+@white: rgb(255, 255, 255);
 @header-transparency: 75%;
+@blur-radius: 10px;
 
 nz-layout {
   height: 100%;
@@ -38,10 +40,17 @@ nz-content {
 .login-header {
   background-color: fade(@deep-blue, @header-transparency);
   z-index: 1;
+  //-webkit-backdrop-filter: blur(@blur-radius);
+  //backdrop-filter: blur(@blur-radius);
 }
 .login-header span {
   color: white;
   font-size: @font-size-lg + 2px;
+}
+:host ::ng-deep .ant-card {
+  background-color: fade(@white, @header-transparency);
+  //-webkit-backdrop-filter: blur(@blur-radius);
+  //backdrop-filter: blur(@blur-radius);
 }
 :host ::ng-deep .ant-card-head {
   background-color: @deep-blue;
