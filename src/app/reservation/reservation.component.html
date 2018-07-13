@@ -1,10 +1,18 @@
 
 <div class="content">
-  <nz-table #nzTable [nzData]="displayData">
+  <nz-table
+    #nzTable
+    [nzFrontPagination]="false"
+    [nzLoading]="loading"
+    [nzTotal]="total"
+    [(nzPageIndex)]="pageIndex"
+    [(nzPageSize)]="pageSize"
+    (nzPageIndexChange)="searchData()"
+    [nzData]="displayData">
     <thead>
     <tr>
       <th>
-        预约课程编号
+        预约订单编号
         <nz-dropdown nzTrigger="click" [nzClickHide]="false">
           <i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>
           <div class="custom-filter-dropdown">
@@ -17,14 +25,10 @@
         预约课程标题
       </th>
       <th>
-        用户昵称
-        <nz-dropdown nzTrigger="click" [nzClickHide]="false">
-          <i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>
-          <div class="custom-filter-dropdown">
-            <input type="text" nz-input placeholder="搜索用户昵称" [(ngModel)]="searchValue">
-            <button nz-button [nzType]="'primary'" (click)="search()">搜索</button>
-          </div>
-        </nz-dropdown>
+        用户邮箱
+      </th>
+      <th>
+        用户手机号
       </th>
       <th nzShowFilter [nzFilters]="filterType" (nzFilterChange)="filterTypeChange($event)">
         订单状态
@@ -47,13 +51,16 @@
     </thead>
     <tbody>
     <tr *ngFor="let data of nzTable.data">
-      <td>{{data.freeTrialId}}</td>
-      <td>{{data.title}}</td>
-      <td>{{data.username}}</td>
-      <td>{{data.status}}</td>
-      <td>{{data.reservationTime}}</td>
+      <td>{{data.reservationId}}</td>
+      <td>{{data.trialName}}</td>
+      <td>{{data.userEmail}}</td>
+      <td>{{data.userMobile}}</td>
+      <td>
+        <span>{{reservationDisplayEnum[data.status]}}</span>
+      </td>
+      <td>{{data.time | date: 'yyyy-MM-dd hh:mm:ss'}}</td>
       <td>{{data.message}}</td>
-      <td><i style="margin-left: 30px;margin-right: 30px; cursor: pointer" class="anticon anticon-check" (click)="checkReservation(data)"></i></td>
+      <td><i *ngIf="data.status == 'PENDING'" style="margin-left: 30px;margin-right: 30px; cursor: pointer" class="anticon anticon-check" (click)="checkReservation(data)"></i></td>
     </tr>
     </tbody>
   </nz-table>

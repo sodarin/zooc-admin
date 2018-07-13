@@ -1,5 +1,13 @@
 <div class="content">
-  <nz-table #nzTable [nzData]="displayData">
+  <nz-table
+    #nzTable
+    [nzFrontPagination]="false"
+    [nzLoading]="loading"
+    [nzTotal]="total"
+    [(nzPageIndex)]="pageIndex"
+    [(nzPageSize)]="pageSize"
+    (nzPageIndexChange)="searchData()"
+    [nzData]="displayData">
     <thead>
     <tr>
       <th>
@@ -13,10 +21,13 @@
         </nz-dropdown>
       </th>
       <th>
-        课程编号
+        课程名称
       </th>
       <th>
-        用户昵称
+        用户邮箱
+      </th>
+      <th>
+        用户手机号
       </th>
       <th nzShowSort [(nzSort)]="sortMap.price" (nzSortChange)="sort('price',$event)">
         订单金额
@@ -34,20 +45,23 @@
           </div>
         </nz-dropdown>
       </th>
-      <th>
-        交易流水号
-      </th>
+      <th></th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let data of nzTable.data">
       <td>{{data.orderId}}</td>
-      <td>{{data.courseId}}</td>
-      <td>{{data.username}}</td>
-      <td>{{data.price}}</td>
-      <td>{{data.status}}</td>
-      <td>{{data.orderTime}}</td>
-      <td>{{data.transactionSerial}}</td>
+      <td>{{data.courseName}}</td>
+      <td>{{data.userEmail}}</td>
+      <td>{{data.userMobile}}</td>
+      <td>{{data.coursePrice}}</td>
+      <td>
+        <span>{{orderDisplayEnum[data.status]}}</span>
+      </td>
+      <td>{{data.time | date: 'yyyy-MM-dd hh:mm:ss'}}</td>
+      <td></td>
+      <td></td>
     </tr>
     </tbody>
   </nz-table>

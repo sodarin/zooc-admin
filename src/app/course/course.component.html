@@ -14,7 +14,7 @@
       <tr>
         <th>
           课程名称
-          <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+          <nz-dropdown nzTrigger="hover" [nzClickHide]="false">
             <i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>
             <div class="custom-filter-dropdown">
               <input type="text" nz-input placeholder="搜索名称" [(ngModel)]="searchValue">
@@ -28,7 +28,7 @@
         <th nzShowSort [(nzSort)]="sortMap.price" (nzSortChange)="sort('price',$event)">
           课程价钱
         </th>
-        <th nzShowFilter [nzFilters]="filterType" (nzFilterChange)="filterTypeChange($event)">
+        <th nzShowFilter [nzFilters]="filterType" (nzFilterChange)="filterTypeChange($event)" [nzFilterMultiple]="false">
           课程类别
         </th>
         <th>

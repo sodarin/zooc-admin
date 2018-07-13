@@ -1,23 +1,24 @@
 import { Injectable } from '@angular/core';
 import {Refund} from '../../model/Refund.model';
 import {RefundType} from '../../model/enum/RefundType';
+import {Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RefundService {
 
-  refunds: Refund[] = [
-    new Refund('2', '1', '张三', 200, RefundType.REFUNDING, '2018-06-20 14:27:56'),
-    new Refund('1', '1', '张三', 100, RefundType.REFUNDED, '2018-06-19 14:27:56'),
-    new Refund('1', '1', '张三', 100, RefundType.REFUNDED, '2018-06-19 14:27:56'),
-    new Refund('1', '1', '张三', 100, RefundType.REFUNDED, '2018-06-19 14:27:56'),
-    new Refund('1', '1', '张三', 100, RefundType.REFUNDED, '2018-06-19 14:27:56'),
-  ];
 
-  constructor() { }
+  constructor(private _http: HttpClient) { }
 
-  getRefunds(): Refund[] {
-    return this.refunds;
+  getRefundsByEnterpriseId(enterpriseId: number, pageIndex: number, pageSize: number): Observable<any> {
+    return this._http.get(`/api/v1/enterprise/${enterpriseId}/refund/list?usePagination=true&pageSize=${pageSize}&targetPage=${pageIndex}`)
+  }
+
+  changeRefundStatus(data: any): Observable<any> {
+    return this._http.put(`/api/v1/order/${data.orderId}`, {
+      status: data.status
+    })
   }
 }

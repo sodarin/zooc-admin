@@ -18,6 +18,10 @@ export class ElaborateCourseService {
     return this._http.get(`/api/v1/enterprise/${enterpriseId}/course/list?usePagination=true&targetPage=${pageIndex}&pageSize=${pageSize}`)
   }
 
+  getElaborateCourseByName(enterpriseId: number, pageSize: number, pageIndex: number, filterConditions: any): Observable<any> {
+    return this._http.get(`/api/v1/enterprise/${enterpriseId}/course/list?usePagination=true&targetPage=${pageIndex}&pageSize=${pageSize}&nameContaining=${filterConditions.name}&categoryId=${filterConditions.filter}`);
+  }
+
   getCategories(): Observable<any> {
     return this._http.get(`/api/v1/category/list`);
   }

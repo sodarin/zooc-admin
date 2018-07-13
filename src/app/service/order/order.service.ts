@@ -1,28 +1,43 @@
 import { Injectable } from '@angular/core';
 import {Order} from '../../model/Order.model';
 import {OrderEnum} from '../../model/enum/OrderEnum';
+import {Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
 
-  orders: Order[] = [
-    new Order('1', '1', '张三', 200, OrderEnum.AVAILABLE, '2018-7-15 12:30:15', '4878487815487145'),
-    new Order('2', '2', '张三1', 200, OrderEnum.REFUNDED, '2018-7-16 12:30:15', '4878487815487146'),
-    new Order('3', '3', '张三2', 400, OrderEnum.REFUNDING, '2018-7-17 12:30:15', '4878487815487147'),
-    new Order('4', '4', '张三3', 200, OrderEnum.AVAILABLE, '2018-7-18 12:30:15', '4878487815487148'),
-    new Order('5', '5', '张三4', 200, OrderEnum.AVAILABLE, '2018-7-19 12:30:15', '4878487815487149'),
-    new Order('6', '6', '张三5', 500, OrderEnum.PENDING, '2018-7-20 12:30:15', '4878487815487150'),
-    new Order('7', '7', '张三6', 700, OrderEnum.AVAILABLE, '2018-7-21 12:30:15', '4878487815487151'),
-    new Order('8', '7', '张三7', 200, OrderEnum.AVAILABLE, '2018-7-22 12:30:15', '4878487815487152'),
-    new Order('9', '1', '张三8', 100, OrderEnum.AVAILABLE, '2018-7-23 12:30:15', '4878487815487153')
 
-  ];
+  constructor(private _http: HttpClient) { }
 
-  constructor() { }
-
-  getOrder(): Order[] {
-    return this.orders;
+  getOrdersByEnterpriseId(enterpriseId: number, pageSize: number, pageIndex: number): Observable<any> {
+    return this._http.get(`/api/v1/enterprise/${enterpriseId}/order/list?usePagination=true&pageSize=${pageSize}&targetPage=${pageIndex}`)
   }
+
+  // getRefundByStatus(enterpriseId: number, pageSize: number, pageIndex: number): Observable<any> {
+  //   return this._http.get(`/api/v1/enterprise/${enterpriseId}/order/list?usePagi`)
+  // }
+
+
+}
+
+export class OrderDetail {
+  constructor(
+    public orderId: number,
+    public userId: number,
+    public username: string,
+    public userEmail: string,
+    public userMobile: string,
+    public enterpriseId: number,
+    public courseId: number,
+    public courseName: string,
+    public coursePrice: number,
+    public time: Date,
+    public status: OrderEnum,
+    public refundId?: number,
+    public refundReason?: string,
+    public refundTime?: Date,
+  ) {}
 }

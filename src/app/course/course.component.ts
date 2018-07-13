@@ -22,14 +22,15 @@ export class CourseComponent implements OnInit {
   displayData: CourseDetail[];
 
 
-  searchValue ='';
+  searchValue = '';
+  filterValue = '';
   filterType = [];
+
+  filterCondition = {'name': this.searchValue, 'filter': this.filterValue};
 
   searchType = [];
   sortMap = {
-    name   : null,
     price   :null,
-    type    : null,
   };
 
   sortName = null;
@@ -46,19 +47,16 @@ export class CourseComponent implements OnInit {
 
   ngOnInit() {
     this.searchData();
-    this.filterType = [
-      {text: 'JAVA', value: 'JAVA'},
-      {text: 'HTML', value: 'HTML'},
-      {text: 'C++', value: 'C++'}
-      ];
+    this.elaborateCourse$.getCategories()
+      .subscribe(result => {
+        let categories = [];
+        result.forEach(item => categories.push({'text': item.name, 'value': item.categoryId}));
+        this.filterType = categories;
+      })
+
   }
 
   searchData(reset: boolean = false, pageIndex: number = this.pageIndex) {
-    // this.elaborateCourse$.getElaborateCourseByEnterpriseId(this.loginService$.currentAdmin.enterpriseId)
-    //   .subscribe(result => {
-    //     this.courses = result.list;
-    //     this.displayData = this.courses;
-    //   });
     if(reset) {
       this.pageIndex = 1;
     }
@@ -80,6 +78,33 @@ export class CourseComponent implements OnInit {
     this.displayData = dataSet;
   }
 
+  search() {
+    this.filterCondition.name = this.searchValue;
+    this.elaborateCourse$.getElaborateCourseByName(this.loginService$.currentAdmin.enterpriseId, this.pageSize, 1, this.filterCondition)
+      .subscribe(result => {
+        this.loading = false;
+        this.total = result.total;
+        this.totalPage = Math.ceil(this.total / this.pageSize);
+        this.pageIndex = 1;
+        this.courses = result.list? result.list: [];
+        this.displayData = this.courses;
+      })
+  }
+
+  filterTypeChange(value: any) {
+    this.filterValue = value? value: '';
+    this.filterCondition.filter = this.filterValue;
+    this.elaborateCourse$.getElaborateCourseByName(this.loginService$.currentAdmin.enterpriseId, this.pageSize, 1, this.filterCondition)
+      .subscribe(result => {
+        this.loading = false;
+        this.total = result.total;
+        this.totalPage = Math.ceil(this.total / this.pageSize);
+        this.pageIndex = 1;
+        this.courses = result.list? result.list: [];
+        this.displayData = this.courses;
+      })
+  }
+
 
   // sort(sortName: string, value: boolean): void {
   //   this.sortName = sortName;
@@ -95,10 +120,10 @@ export class CourseComponent implements OnInit {
   //   this.search();
   // }
 
-  filterTypeChange(value: string[]): void {
-    this.searchType = value;
-    this.searchCourseType();
-  }
+  // filterTypeChange(value: string[]): void {
+  //   this.searchType = value;
+  //   this.searchCourseType();
+  // }
 
   // search(): void {
   //   const filterFunc = (item) => {
@@ -109,13 +134,13 @@ export class CourseComponent implements OnInit {
   //   this.displayData = data.sort((a, b) => (this.sortValue === 'ascend') ? (a[ this.sortName ] > b[ this.sortName ] ? 1 : -1) : (b[ this.sortName ] > a[ this.sortName ] ? 1 : -1));
   // }
 
-  searchCourseType() :void {
-    const filterFunc = (item) => {
-      return this.searchType.some(type => item.type.indexOf(type) !== -1)
-    };
-    const data = this.courses.filter(item => filterFunc(item));
-    this.displayData = data.sort((a, b) => (this.sortValue === 'ascend') ? (a[ this.sortName ] > b[ this.sortName ] ? 1 : -1) : (b[ this.sortName ] > a[ this.sortName ] ? 1 : -1));
-  }
+  // searchCourseType() :void {
+  //   const filterFunc = (item) => {
+  //     return this.searchType.some(type => item.type.indexOf(type) !== -1)
+  //   };
+  //   const data = this.courses.filter(item => filterFunc(item));
+  //   this.displayData = data.sort((a, b) => (this.sortValue === 'ascend') ? (a[ this.sortName ] > b[ this.sortName ] ? 1 : -1) : (b[ this.sortName ] > a[ this.sortName ] ? 1 : -1));
+  // }
 
   edit(data: any): void {
     const modal = this.modalService.create({

@@ -1,9 +1,17 @@
 <div class="content">
-  <nz-table #nzTable [nzData]="displayData">
+  <nz-table
+    #nzTable
+    [nzFrontPagination]="false"
+    [nzLoading]="loading"
+    [nzTotal]="total"
+    [(nzPageIndex)]="pageIndex"
+    [(nzPageSize)]="pageSize"
+    (nzPageIndexChange)="searchData()"
+    [nzData]="displayData">
     <thead>
     <tr>
       <th>
-        订单编号
+        退款编号
         <nz-dropdown nzTrigger="click" [nzClickHide]="false">
           <i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>
           <div class="custom-filter-dropdown">
@@ -13,19 +21,19 @@
         </nz-dropdown>
       </th>
       <th>
-        课程编号
+        订单编号
       </th>
       <th>
-        用户昵称
+        课程名称
       </th>
-      <th nzShowSort [(nzSort)]="sortMap.price" (nzSortChange)="sort('price',$event)">
-        订单金额
+      <th>
+        用户邮箱
       </th>
-      <th nzShowFilter [nzFilters]="filterType" (nzFilterChange)="filterTypeChange($event)">
-        订单状态
+      <th>
+        用户手机号
       </th>
       <th nzShowSort [(nzSort)]="sortMap.price" (nzSortChange)="sort('orderTime',$event)">
-        下单时间
+        退款时间
         <nz-dropdown nzTrigger="click" [nzClickHide]="false">
           <i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>
           <div class="custom-filter-dropdown">
@@ -34,18 +42,30 @@
           </div>
         </nz-dropdown>
       </th>
+      <th nzShowSort [(nzSort)]="sortMap.price" (nzSortChange)="sort('price',$event)">
+        订单金额
+      </th>
+      <th nzShowFilter [nzFilters]="filterType" (nzFilterChange)="filterTypeChange($event)">
+        退款状态
+      </th>
+      <th>
+        退款原因
+      </th>
       <th></th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let data of nzTable.data">
+      <td>{{data.refundId}}</td>
       <td>{{data.orderId}}</td>
-      <td>{{data.courseId}}</td>
-      <td>{{data.username}}</td>
-      <td>{{data.price}}</td>
-      <td>{{data.status}}</td>
-      <td>{{data.orderTime}}</td>
-      <td><i style="margin-left: 30px;margin-right: 30px; cursor: pointer" class="anticon anticon-check" (click)="checkReservation(data)"></i></td>
+      <td>{{data.courseName}}</td>
+      <td>{{data.userEmail}}</td>
+      <td>{{data.userMobile}}</td>
+      <td>{{data.refundTime | date: 'yyyy-MM-dd hh:mm:ss'}}</td>
+      <td>{{data.coursePrice}}</td>
+      <td>{{refundDisplayEnum[data.status]}}</td>
+      <td>{{data.refundReason}}</td>
+      <td><i *ngIf="data.status == 'REFUND_REQUESTED'" style="margin-left: 30px;margin-right: 30px; cursor: pointer" class="anticon anticon-check" (click)="checkRefund(data)"></i></td>
     </tr>
     </tbody>
   </nz-table>
