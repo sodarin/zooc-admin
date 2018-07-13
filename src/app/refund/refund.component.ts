@@ -20,17 +20,19 @@ export class RefundComponent implements OnInit {
   refunds: OrderDetail[];
   displayData: OrderDetail[];
 
-  searchValue ='';
-  filterAddress = [];
-  filterType = [];
+  orderIdValue = '';
+  courseNameValue = '';
+  userEmailValue = '';
+  userMobileValue = '';
+  statusValue = '';
 
-  searchAddress = [];
-  searchType = [];
+  filterStatus = [];
+  filterConditions = {'name': this.courseNameValue, 'orderId': this.orderIdValue, 'status': this.statusValue, 'userEmail': this.userEmailValue, 'userMobile': this.userMobileValue};
+
+
+
   sortMap = {
-    title   : null,
     price   :null,
-    type    : null,
-    orderTime: null
   };
 
   pageIndex = 1;
@@ -39,8 +41,6 @@ export class RefundComponent implements OnInit {
   loading = true;
   totalPage = 1;
 
-  sortName = null;
-  sortValue = null;
 
   dateRange = '';
 
@@ -48,6 +48,10 @@ export class RefundComponent implements OnInit {
 
   ngOnInit() {
     this.searchData();
+    this.filterStatus = [
+      {'text': '退款申请', 'value': 'REFUND_REQUESTED'},
+      {'text': '已退款', 'value': 'REFUNDED'},
+    ]
   }
 
   searchData(reset: boolean = false, pageIndex: number = this.pageIndex) {
@@ -55,7 +59,7 @@ export class RefundComponent implements OnInit {
       this.pageIndex = 1;
     }
     this.loading = true;
-    this.refundService$.getRefundsByEnterpriseId(this.loginService$.currentAdmin.enterpriseId, pageIndex, this.pageSize)
+    this.refundService$.getRefundsByEnterpriseId(this.loginService$.currentAdmin.enterpriseId, pageIndex, this.pageSize, this.filterConditions)
       .subscribe(result => {
         this.loading = false;
         this.total = result.total;
@@ -66,27 +70,43 @@ export class RefundComponent implements OnInit {
       });
   }
 
-  // sort(sortName: string, value: boolean): void {
-  //   this.sortName = sortName;
-  //   this.sortValue = value;
-  //   for (const key in this.sortMap) {
-  //     this.sortMap[ key ] = (key === sortName ? value : null);
-  //   }
-  //   this.search();
-  // }
-  //
-  // search(): void {
-  //   const filterFunc = (item) => {
-  //     return (this.searchAddress.length ? this.searchAddress.some(address => item.address.indexOf(address) !== -1) : true) &&
-  //       (item.courseId.indexOf(this.searchValue) !== -1);
-  //   };
-  //   const data = this.refunds.filter(item => filterFunc(item));
-  //   this.displayData = data.sort((a, b) => (this.sortValue === 'ascend') ? (a[ this.sortName ] > b[ this.sortName ] ? 1 : -1) : (b[ this.sortName ] > a[ this.sortName ] ? 1 : -1));
-  // }
-  //
-  // print() {
-  //   console.log(this.dateRange);
-  // }
+  filterData() {
+    this.refundService$.getRefundsByEnterpriseId(this.loginService$.currentAdmin.enterpriseId,1,  this.pageSize, this.filterConditions)
+      .subscribe(result => {
+        this.loading = false;
+        this.total = result.total;
+        this.totalPage = Math.ceil(this.total / this.pageSize);
+        this.pageIndex = 1;
+        this.refunds = result.list? result.list: [];
+        this.displayData = this.refunds;
+      })
+  }
+  searchOrderId() {
+    this.filterConditions.orderId = this.orderIdValue;
+    this.filterData();
+  }
+
+  searchCourseName() {
+    this.filterConditions.name = this.courseNameValue;
+    this.filterData();
+  }
+
+  searchUserEmail() {
+    this.filterConditions.userEmail = this.userEmailValue;
+    this.filterData();
+  }
+
+  searchUserMobile() {
+    this.filterConditions.userMobile = this.userMobileValue;
+    this.filterData();
+  }
+
+  filterStatusChange(value: any) {
+    this.statusValue = value? value: '';
+    this.filterConditions.status = this.statusValue;
+    this.filterData();
+  }
+
 
   checkRefund(data: any) {
     data.status = RefundType[RefundType.REFUNDED];

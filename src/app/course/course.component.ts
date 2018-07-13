@@ -28,13 +28,10 @@ export class CourseComponent implements OnInit {
 
   filterCondition = {'name': this.searchValue, 'filter': this.filterValue};
 
-  searchType = [];
   sortMap = {
     price   :null,
   };
 
-  sortName = null;
-  sortValue = null;
 
 
   pageIndex = 1;

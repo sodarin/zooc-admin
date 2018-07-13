@@ -13,8 +13,8 @@ export class ReservationService {
 
   constructor(private _http: HttpClient) { }
 
-  getReservationsByEnterpriseId(enterpriseId: number, pageSize: number, pageIndex: number): Observable<any> {
-    return this._http.get(`/api/v1/enterprise/${enterpriseId}/reservation/list?usePagination=true&pageSize=${pageSize}&targetPage=${pageIndex}`)
+  getReservationsByEnterpriseId(enterpriseId: number, pageSize: number, pageIndex: number, filterConditions?: any): Observable<any> {
+    return this._http.get(`/api/v1/enterprise/${enterpriseId}/reservation/list?usePagination=true&pageSize=${pageSize}&targetPage=${pageIndex}&reservationId=${filterConditions.reservationId}&trialNameContaining=${filterConditions.name}&status=${filterConditions.status}`)
   }
 
   changeReservationStatus(data: any): Observable<any> {

@@ -12,40 +12,61 @@
     <tr>
       <th>
         退款编号
-        <nz-dropdown nzTrigger="click" [nzClickHide]="false">
-          <i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>
-          <div class="custom-filter-dropdown">
-            <input type="text" nz-input placeholder="搜索订单编号" [(ngModel)]="searchValue">
-            <button nz-button [nzType]="'primary'" (click)="search()">搜索</button>
-          </div>
-        </nz-dropdown>
       </th>
       <th>
         订单编号
-      </th>
-      <th>
-        课程名称
-      </th>
-      <th>
-        用户邮箱
-      </th>
-      <th>
-        用户手机号
-      </th>
-      <th nzShowSort [(nzSort)]="sortMap.price" (nzSortChange)="sort('orderTime',$event)">
-        退款时间
         <nz-dropdown nzTrigger="click" [nzClickHide]="false">
           <i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>
           <div class="custom-filter-dropdown">
-            <nz-range-picker [(ngModel)]="dateRange"></nz-range-picker>
-            <button nz-button [nzType]="'primary'" (click)="print()">搜索</button>
+            <input type="text" nz-input placeholder="搜索订单编号" [(ngModel)]="orderIdValue">
+            <button nz-button [nzType]="'primary'" (click)="searchOrderId()">搜索</button>
           </div>
         </nz-dropdown>
+      </th>
+      <th>
+        课程名称
+        <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+          <i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>
+          <div class="custom-filter-dropdown">
+            <input type="text" nz-input placeholder="搜索订单编号" [(ngModel)]="courseNameValue">
+            <button nz-button [nzType]="'primary'" (click)="searchCourseName()">搜索</button>
+          </div>
+        </nz-dropdown>
+      </th>
+      <th>
+        用户邮箱
+        <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+          <i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>
+          <div class="custom-filter-dropdown">
+            <input type="text" nz-input placeholder="搜索订单编号" [(ngModel)]="userEmailValue">
+            <button nz-button [nzType]="'primary'" (click)="searchUserEmail()">搜索</button>
+          </div>
+        </nz-dropdown>
+      </th>
+      <th>
+        用户手机号
+        <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+          <i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>
+          <div class="custom-filter-dropdown">
+            <input type="text" nz-input placeholder="搜索订单编号" [(ngModel)]="userMobileValue">
+            <button nz-button [nzType]="'primary'" (click)="searchUserMobile()">搜索</button>
+          </div>
+        </nz-dropdown>
+      </th>
+      <th nzShowSort [(nzSort)]="sortMap.price" (nzSortChange)="sort('orderTime',$event)">
+        退款时间
+        <!--<nz-dropdown nzTrigger="click" [nzClickHide]="false">-->
+          <!--<i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>-->
+          <!--<div class="custom-filter-dropdown">-->
+            <!--<nz-range-picker [(ngModel)]="dateRange"></nz-range-picker>-->
+            <!--<button nz-button [nzType]="'primary'" (click)="print()">搜索</button>-->
+          <!--</div>-->
+        <!--</nz-dropdown>-->
       </th>
       <th nzShowSort [(nzSort)]="sortMap.price" (nzSortChange)="sort('price',$event)">
         订单金额
       </th>
-      <th nzShowFilter [nzFilters]="filterType" (nzFilterChange)="filterTypeChange($event)">
+      <th nzShowFilter [nzFilters]="filterStatus" (nzFilterChange)="filterStatusChange($event)">
         退款状态
       </th>
       <th>

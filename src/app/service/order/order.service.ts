@@ -12,13 +12,11 @@ export class OrderService {
 
   constructor(private _http: HttpClient) { }
 
-  getOrdersByEnterpriseId(enterpriseId: number, pageSize: number, pageIndex: number): Observable<any> {
-    return this._http.get(`/api/v1/enterprise/${enterpriseId}/order/list?usePagination=true&pageSize=${pageSize}&targetPage=${pageIndex}`)
+  getOrdersByEnterpriseId(enterpriseId: number, pageSize: number, pageIndex: number, filterConditions?: any): Observable<any> {
+    return this._http.get(`/api/v1/enterprise/${enterpriseId}/order/list?usePagination=true&pageSize=${pageSize}&targetPage=${pageIndex}&orderId=${filterConditions.orderId}&courseNameContaining=${filterConditions.name}&status=${filterConditions.status}`)
   }
 
-  // getRefundByStatus(enterpriseId: number, pageSize: number, pageIndex: number): Observable<any> {
-  //   return this._http.get(`/api/v1/enterprise/${enterpriseId}/order/list?usePagi`)
-  // }
+
 
 
 }

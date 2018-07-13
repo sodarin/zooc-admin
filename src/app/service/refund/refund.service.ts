@@ -12,8 +12,8 @@ export class RefundService {
 
   constructor(private _http: HttpClient) { }
 
-  getRefundsByEnterpriseId(enterpriseId: number, pageIndex: number, pageSize: number): Observable<any> {
-    return this._http.get(`/api/v1/enterprise/${enterpriseId}/refund/list?usePagination=true&pageSize=${pageSize}&targetPage=${pageIndex}`)
+  getRefundsByEnterpriseId(enterpriseId: number, pageIndex: number, pageSize: number, filterConditions?: any): Observable<any> {
+    return this._http.get(`/api/v1/enterprise/${enterpriseId}/refund/list?usePagination=true&pageSize=${pageSize}&targetPage=${pageIndex}&orderId=${filterConditions.orderId}&userEmail=${filterConditions.userEmail}&userMobile=${filterConditions.userMobile}&courseNameContaining=${filterConditions.name}&status=${filterConditions.status}`)
   }
 
   changeRefundStatus(data: any): Observable<any> {

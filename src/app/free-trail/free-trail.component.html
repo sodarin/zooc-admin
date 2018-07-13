@@ -14,11 +14,11 @@
     <tr>
       <th>
         预约课程名称
-        <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+        <nz-dropdown nzTrigger="hover" [nzClickHide]="false">
           <i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>
           <div class="custom-filter-dropdown">
-            <input type="text" nz-input placeholder="搜索名称" [(ngModel)]="searchValue">
-            <button nz-button [nzType]="'primary'" (click)="search()">搜索</button>
+            <input type="text" nz-input placeholder="搜索名称" [(ngModel)]="searchCourseName">
+            <button nz-button [nzType]="'primary'" (click)="searchCourseByName()">搜索</button>
           </div>
         </nz-dropdown>
       </th>
@@ -28,19 +28,19 @@
       <th>
         预约课程状态
       </th>
-      <th nzShowFilter [nzFilters]="filterType" (nzFilterChange)="filterTypeChange($event)">
+      <th nzShowFilter [nzFilters]="filterType" [nzFilterMultiple]="false" (nzFilterChange)="filterTypeChange($event)">
         预约课程类别
       </th>
-      <th nzShowFilter [nzFilters]="filterAddress" (nzFilterChange)="filterAddressChange($event)">
+      <th nzShowFilter [nzFilters]="filterAddress" [nzFilterMultiple]="false" (nzFilterChange)="filterAddressChange($event)">
         上课地点
       </th>
       <th>
         讲师
-        <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+        <nz-dropdown nzTrigger="hover" [nzClickHide]="false">
           <i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>
           <div class="custom-filter-dropdown">
-            <input type="text" nz-input placeholder="搜索名称" [(ngModel)]="searchValue">
-            <button nz-button [nzType]="'primary'" (click)="search()">搜索</button>
+            <input type="text" nz-input placeholder="搜索名称" [(ngModel)]="searchLecturerName">
+            <button nz-button [nzType]="'primary'" (click)="searchLecturerByName()">搜索</button>
           </div>
         </nz-dropdown>
       </th>

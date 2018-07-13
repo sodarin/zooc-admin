@@ -15,17 +15,18 @@ export class OrderComponent implements OnInit {
   orders: OrderDetail[];
   displayData: OrderDetail[];
 
-  searchValue ='';
-  filterAddress = [];
-  filterType = [];
+  orderIdValue = '';
+  courseNameValue = '';
+  statusValue = '';
 
-  searchAddress = [];
-  searchType = [];
+  filterStatus = [];
+
+  filterConditions = {'name': this.courseNameValue, 'orderId': this.orderIdValue, 'status': this.statusValue};
+
+
+
   sortMap = {
-    title   : null,
     price   :null,
-    type    : null,
-    orderTime: null
   };
 
   pageIndex = 1;
@@ -34,8 +35,6 @@ export class OrderComponent implements OnInit {
   loading = true;
   totalPage = 1;
 
-  sortName = null;
-  sortValue = null;
 
   dateRange = '';
 
@@ -44,7 +43,13 @@ export class OrderComponent implements OnInit {
 
   ngOnInit() {
     this.searchData();
-
+    this.filterStatus = [
+      {'text': '待付款', 'value': 'PENDING'},
+      {'text': '已付款', 'value': 'AVAILABLE'},
+      {'text': '已取消', 'value': 'CANCELED'},
+      {'text': '退款申请', 'value': 'REFUND_REQUESTED'},
+      {'text': '已退款', 'value': 'REFUNDED'}
+    ]
   }
 
   searchData(reset: boolean = false, pageIndex: number = this.pageIndex) {
@@ -52,7 +57,7 @@ export class OrderComponent implements OnInit {
       this.pageIndex = 1;
     }
     this.loading = true;
-    this.order$.getOrdersByEnterpriseId(this.loginService$.currentAdmin.enterpriseId, this.pageSize, pageIndex)
+    this.order$.getOrdersByEnterpriseId(this.loginService$.currentAdmin.enterpriseId, this.pageSize, pageIndex, this.filterConditions)
       .subscribe(result => {
         this.loading = false;
         this.total = result.total;
@@ -63,26 +68,33 @@ export class OrderComponent implements OnInit {
       });
   }
 
-  // sort(sortName: string, value: boolean): void {
-  //   this.sortName = sortName;
-  //   this.sortValue = value;
-  //   for (const key in this.sortMap) {
-  //     this.sortMap[ key ] = (key === sortName ? value : null);
-  //   }
-  //   this.search();
-  // }
+  filterData() {
+    this.order$.getOrdersByEnterpriseId(this.loginService$.currentAdmin.enterpriseId, this.pageSize, 1, this.filterConditions)
+      .subscribe(result => {
+        this.loading = false;
+        this.total = result.total;
+        this.totalPage = Math.ceil(this.total / this.pageSize);
+        this.pageIndex = 1;
+        this.orders = result.list? result.list: [];
+        this.displayData = this.orders;
+      })
+  }
 
-  // search(): void {
-  //   const filterFunc = (item) => {
-  //     return (this.searchAddress.length ? this.searchAddress.some(address => item.address.indexOf(address) !== -1) : true) &&
-  //       (item.orderId.indexOf(this.searchValue) !== -1);
-  //   };
-  //   const data = this.orders.filter(item => filterFunc(item));
-  //   this.displayData = data.sort((a, b) => (this.sortValue === 'ascend') ? (a[ this.sortName ] > b[ this.sortName ] ? 1 : -1) : (b[ this.sortName ] > a[ this.sortName ] ? 1 : -1));
-  // }
+  searchOrderId() {
+    this.filterConditions.orderId = this.orderIdValue;
+    this.filterData();
+  }
 
-  // print() {
-  //   console.log(this.dateRange);
-  // }
+  searchCourseByName() {
+    this.filterConditions.name = this.courseNameValue;
+    this.filterData();
+  }
+
+  filterStatusChange(value: any) {
+    this.statusValue = value? value: '';
+    this.filterConditions.status = this.statusValue;
+    this.filterData();
+  }
+
 
 }

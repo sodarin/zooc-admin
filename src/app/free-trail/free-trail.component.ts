@@ -23,15 +23,18 @@ export class FreeTrailComponent implements OnInit {
   data = [];
   displayData = [];
 
-  searchValue ='';
+  searchCourseName = '';
+  searchLecturerName = '';
+  typeValue = '';
+  addressValue = '';
   filterType = [];
+  filterAddress = [];
 
-  searchType = [];
+  filterConditions = {'name': this.searchCourseName, 'branchId': this.addressValue, 'categoryId': this.typeValue, 'lecturerName': this.searchLecturerName};
+
 
   sortMap = {
-    name   : null,
-    releaseTime   :null,
-    type    : null,
+    releaseTime: null,
   };
 
   pageIndex = 1;
@@ -40,13 +43,28 @@ export class FreeTrailComponent implements OnInit {
   loading = true;
   totalPage = 1;
 
-  sortName = null;
-  sortValue = null;
 
-  constructor(private loginService$: LoginService, private freeTrial$: FreeTrialService, private branchService$: BranchService, private message: NzMessageService, private modalService: NzModalService) { }
+
+  constructor(private loginService$: LoginService,
+              private freeTrial$: FreeTrialService,
+              private branchService$: BranchService,
+              private message: NzMessageService,
+              private modalService: NzModalService) { }
 
   ngOnInit() {
-    this.searchData()
+    this.searchData();
+    this.freeTrial$.getCategories()
+      .subscribe(result => {
+        let categories = [];
+        result.forEach(item => categories.push({'text': item.name, 'value': item.categoryId}));
+        this.filterType = categories;
+      });
+    this.branchService$.getBranchById(this.loginService$.currentAdmin.enterpriseId)
+      .subscribe(result => {
+        let branches = [];
+        result.list.forEach(item => branches.push({'text': item.name, 'value': item.branchId}));
+        this.filterAddress = branches;
+      })
   }
 
   searchData(reset: boolean = false, pageIndex: number = this.pageIndex) {
@@ -55,7 +73,7 @@ export class FreeTrailComponent implements OnInit {
     }
     this.loading = true;
     console.log(this.loginService$.currentAdmin.enterpriseId);
-    this.freeTrial$.getFreeTrialByEnterpriseId(this.loginService$.currentAdmin.enterpriseId, this.pageSize, pageIndex)
+    this.freeTrial$.getFreeTrialByEnterpriseId(this.loginService$.currentAdmin.enterpriseId, this.pageSize, pageIndex, this.filterConditions)
       .subscribe(result => {
         this.loading = false;
         this.total = result.total;
@@ -66,47 +84,45 @@ export class FreeTrailComponent implements OnInit {
       });
   }
 
+  filterData() {
+    this.freeTrial$.getFreeTrialByEnterpriseId(this.loginService$.currentAdmin.enterpriseId, this.pageSize, 1, this.filterConditions)
+      .subscribe(result => {
+        this.loading = false;
+        this.total = result.total;
+        this.totalPage = Math.ceil(this.total / this.pageSize);
+        this.pageIndex = 1;
+        this.freeTrials = result.list? result.list: [];
+        this.displayData = this.freeTrials;
+      })
+  }
+
+  searchCourseByName() {
+    this.filterConditions.name = this.searchCourseName;
+    this.filterData();
+  }
+
+  searchLecturerByName() {
+    this.filterConditions.lecturerName = this.searchLecturerName;
+    this.filterData();
+  }
+
+  filterTypeChange(value: any) {
+    this.typeValue = value? value: '';
+    this.filterConditions.categoryId = this.typeValue;
+    this.filterData();
+  }
+
+  filterAddressChange(value: any) {
+    this.addressValue = value? value: '';
+    this.filterConditions.branchId = this.addressValue;
+    this.filterData();
+  }
+
   deleteRow(i: string): void {
     const dataSet = this.data.filter(d => d.freeTrialId !== i);
     this.displayData = dataSet;
   }
 
-
-  // sort(sortName: string, value: boolean): void {
-  //   this.sortName = sortName;
-  //   this.sortValue = value;
-  //   for (const key in this.sortMap) {
-  //     this.sortMap[ key ] = (key === sortName ? value : null);
-  //   }
-  //   this.search();
-  // }
-
-  // filterAddressChange(value: string[]): void {
-  //   this.searchAddress = value;
-  //   this.search();
-  // }
-
-  // filterTypeChange(value: string[]): void {
-  //   this.searchType = value;
-  //   this.searchCourseType();
-  // }
-
-  // search(): void {
-  //   const filterFunc = (item) => {
-  //     return (this.searchAddress.length ? this.searchAddress.some(address => item.address.indexOf(address) !== -1) : true) &&
-  //       (item.title.indexOf(this.searchValue) !== -1);
-  //   };
-  //   const data = this.data.filter(item => filterFunc(item));
-  //   this.displayData = data.sort((a, b) => (this.sortValue === 'ascend') ? (a[ this.sortName ] > b[ this.sortName ] ? 1 : -1) : (b[ this.sortName ] > a[ this.sortName ] ? 1 : -1));
-  // }
-
-  // searchCourseType() :void {
-  //   const filterFunc = (item) => {
-  //     return this.searchType.some(type => item.type.indexOf(type) !== -1)
-  //   };
-  //   const data = this.data.filter(item => filterFunc(item));
-  //   this.displayData = data.sort((a, b) => (this.sortValue === 'ascend') ? (a[ this.sortName ] > b[ this.sortName ] ? 1 : -1) : (b[ this.sortName ] > a[ this.sortName ] ? 1 : -1));
-  // }
 
 
 

@@ -17,9 +17,13 @@ export class ReservationComponent implements OnInit {
   reservations: TrialReservationDetail[];
   displayData: TrialReservationDetail[];
 
-  searchValue ='';
-  filterAddress = [];
-  filterType = [];
+  reservationIdValue ='';
+  courseNameValue = '';
+  statusValue = '';
+
+  filterStatus = [];
+
+  filterConditions = {'name': this.courseNameValue, 'reservationId': this.reservationIdValue, 'status': this.statusValue};
 
   pageIndex = 1;
   pageSize = 5;
@@ -27,17 +31,10 @@ export class ReservationComponent implements OnInit {
   loading = true;
   totalPage = 1;
 
-  searchAddress = [];
-  searchType = [];
   sortMap = {
-    title   : null,
     price   :null,
-    type    : null,
-    reservationTime: null
   };
 
-  sortName = null;
-  sortValue = null;
 
   dateRange = '';
 
@@ -45,6 +42,13 @@ export class ReservationComponent implements OnInit {
 
   ngOnInit() {
     this.searchData();
+    this.filterStatus = [
+      {'text': '待处理', 'value': 'PENDING'},
+      {'text': '已处理', 'value': 'AVAILABLE'},
+      {'text': '已取消', 'value': 'CANCELED'},
+      {'text': '已使用', 'value': 'USED'},
+      {'text': '已过期', 'value': 'EXPIRED'}
+    ]
   }
 
   searchData(reset: boolean = false, pageIndex: number = this.pageIndex) {
@@ -52,7 +56,7 @@ export class ReservationComponent implements OnInit {
       this.pageIndex = 1;
     }
     this.loading = true;
-    this.reservationService$.getReservationsByEnterpriseId(this.loginService$.currentAdmin.enterpriseId, this.pageSize, pageIndex)
+    this.reservationService$.getReservationsByEnterpriseId(this.loginService$.currentAdmin.enterpriseId, this.pageSize, pageIndex, this.filterConditions)
       .subscribe(result => {
         this.loading = false;
         this.total = result.total;
@@ -63,27 +67,34 @@ export class ReservationComponent implements OnInit {
       });
   }
 
-  // sort(sortName: string, value: boolean): void {
-  //   this.sortName = sortName;
-  //   this.sortValue = value;
-  //   for (const key in this.sortMap) {
-  //     this.sortMap[ key ] = (key === sortName ? value : null);
-  //   }
-  //   this.search();
-  // }
-  //
-  // search(): void {
-  //   const filterFunc = (item) => {
-  //     return (this.searchAddress.length ? this.searchAddress.some(address => item.address.indexOf(address) !== -1) : true) &&
-  //       (item.freeTrialId.indexOf(this.searchValue) !== -1);
-  //   };
-  //   const data = this.reservations.filter(item => filterFunc(item));
-  //   this.displayData = data.sort((a, b) => (this.sortValue === 'ascend') ? (a[ this.sortName ] > b[ this.sortName ] ? 1 : -1) : (b[ this.sortName ] > a[ this.sortName ] ? 1 : -1));
-  // }
-  //
-  // print() {
-  //   console.log(this.dateRange);
-  // }
+  filterData() {
+    this.reservationService$.getReservationsByEnterpriseId(this.loginService$.currentAdmin.enterpriseId, this.pageSize, 1, this.filterConditions)
+      .subscribe(result => {
+        this.loading = false;
+        this.total = result.total;
+        this.totalPage = Math.ceil(this.total / this.pageSize);
+        this.pageIndex = 1;
+        this.reservations = result.list? result.list: [];
+        this.displayData = this.reservations;
+      })
+  }
+
+  searchReservationId() {
+    this.filterConditions.reservationId = this.reservationIdValue;
+    this.filterData();
+  }
+
+  searchCourseByName() {
+    this.filterConditions.name = this.courseNameValue;
+    this.filterData();
+  }
+
+  filterStatusChange(value: any) {
+    this.statusValue = value? value: '';
+    this.filterConditions.status = this.statusValue;
+    this.filterData();
+  }
+
 
   checkReservation(data: any) {
     data.status = ReservationEnum[ReservationEnum.AVAILABLE];
