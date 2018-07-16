@@ -14,7 +14,7 @@ import {LoginService} from '../service/login/login.service';
 @Component({
   selector: 'app-course',
   templateUrl: './course.component.html',
-  styleUrls: ['./course.component.css']
+  styleUrls: ['./course.component.less']
 })
 export class CourseComponent implements OnInit {
 

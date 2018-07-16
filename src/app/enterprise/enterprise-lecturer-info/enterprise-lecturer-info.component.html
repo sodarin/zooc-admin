@@ -21,7 +21,11 @@
     <tbody>
     <tr *ngFor="let data of editRowTable.data">
       <td>{{data.name}}</td>
-      <td><img style="width: 104px; height: 104px" [src]="data.photoUrl"/></td>
+      <td>
+        <div class="img-content">
+          <img [src]="data.photoUrl" />
+        </div>
+      </td>
       <td>{{data.introduction}}</td>
       <td>
         <i style="cursor: pointer; margin-right: 20px;" class="anticon anticon-edit" (click)="edit(data)"></i>

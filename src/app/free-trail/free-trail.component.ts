@@ -14,7 +14,7 @@ import {StatusType} from '../model/enum/StatusTypeEnum';
 @Component({
   selector: 'app-free-trail',
   templateUrl: './free-trail.component.html',
-  styleUrls: ['./free-trail.component.css']
+  styleUrls: ['./free-trail.component.less']
 })
 export class FreeTrailComponent implements OnInit {
 
