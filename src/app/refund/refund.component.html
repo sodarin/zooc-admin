@@ -15,7 +15,7 @@
       </th>
       <th>
         订单编号
-        <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+        <nz-dropdown nzTrigger="hover" [nzClickHide]="false">
           <i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>
           <div class="custom-filter-dropdown">
             <input type="text" nz-input placeholder="搜索订单编号" [(ngModel)]="orderIdValue">
@@ -25,7 +25,7 @@
       </th>
       <th>
         课程名称
-        <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+        <nz-dropdown nzTrigger="hover" [nzClickHide]="false">
           <i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>
           <div class="custom-filter-dropdown">
             <input type="text" nz-input placeholder="搜索订单编号" [(ngModel)]="courseNameValue">
@@ -35,7 +35,7 @@
       </th>
       <th>
         用户邮箱
-        <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+        <nz-dropdown nzTrigger="hover" [nzClickHide]="false">
           <i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>
           <div class="custom-filter-dropdown">
             <input type="text" nz-input placeholder="搜索订单编号" [(ngModel)]="userEmailValue">
@@ -45,7 +45,7 @@
       </th>
       <th>
         用户手机号
-        <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+        <nz-dropdown nzTrigger="hover" [nzClickHide]="false">
           <i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>
           <div class="custom-filter-dropdown">
             <input type="text" nz-input placeholder="搜索订单编号" [(ngModel)]="userMobileValue">
@@ -66,7 +66,7 @@
       <th nzShowSort [(nzSort)]="sortMap.price" (nzSortChange)="sort('price',$event)">
         订单金额
       </th>
-      <th nzShowFilter [nzFilters]="filterStatus" (nzFilterChange)="filterStatusChange($event)">
+      <th nzShowFilter [nzFilters]="filterStatus" (nzFilterChange)="filterStatusChange($event)" [nzFilterMultiple]="false">
         退款状态
       </th>
       <th>

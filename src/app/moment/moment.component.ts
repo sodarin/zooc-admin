@@ -38,7 +38,7 @@ export class MomentComponent implements OnInit {
     });
     modal.afterClose.subscribe(result => {
       if (result){
-        this.moments.push(result);
+        this.moments.unshift(result);
         this.message.success('添加朋友圈成功!');
       }
     });

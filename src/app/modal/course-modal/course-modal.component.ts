@@ -106,7 +106,7 @@ export class CourseModalComponent implements OnInit {
 
   submit() {
     this.courseOfferings = this.courseOfferings.filter(item => item.lecturerId !== undefined || item.branchId !== undefined);
-    if (this.courseForm.value.name == '' || this.courseForm.value.price == '' || this.courseForm.value.type == '' || this.detailContent == '' || this.detailContent == null) {
+    if (this.courseForm.value.name == '' || this.courseForm.value.price == null || this.courseForm.value.type == '' || this.detailContent == '' || this.detailContent == null) {
       this.message.error('内容不能为空');
     }else {
       this.result = {
