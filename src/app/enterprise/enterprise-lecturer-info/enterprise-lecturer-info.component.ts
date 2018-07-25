@@ -8,7 +8,7 @@ import {LoginService} from '../../service/login/login.service';
 @Component({
   selector: 'app-enterprise-lecturer-info',
   templateUrl: './enterprise-lecturer-info.component.html',
-  styleUrls: ['./enterprise-lecturer-info.component.css']
+  styleUrls: ['./enterprise-lecturer-info.component.less']
 })
 export class EnterpriseLecturerInfoComponent implements OnInit {
 
