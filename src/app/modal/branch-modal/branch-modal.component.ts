@@ -20,6 +20,7 @@ export class BranchModalComponent implements OnInit {
   result: Branch;
   branchForm: FormGroup;
   address: string = '';
+  map: any;
 
   private _subscription: Subscription;
   private plugin: Promise<AmapPlaceSearchWrapper>;
@@ -46,7 +47,7 @@ export class BranchModalComponent implements OnInit {
     })
   }
 
-  onMapReady(event, address: string) {
+  searchInputAddress(event, address: string) {
     if (event == 'enter'){
       this.searchAddress(address);
     }
@@ -66,13 +67,16 @@ export class BranchModalComponent implements OnInit {
     this.modal.destroy(this.result);
   }
 
+  onMapReady(map: any) {
+    this.map = map;
+  }
+
   searchAddress(address: string) {
-    console.log(address);
     this.plugin = this.amapPlaceSearch.of({
       pageIndex: 1,
+      map: this.map,
       panel: 'panel'
     });
-    address = this.branchForm.value.search;
     this.plugin.then(placeSearch => {
       this._subscription = placeSearch.on('complete').subscribe(event => console.log('PlaceSearch event: "complete"', event));
       this._subscription.add(

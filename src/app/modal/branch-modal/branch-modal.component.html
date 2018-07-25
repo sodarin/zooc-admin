@@ -12,7 +12,7 @@
     <nz-form-item>
       <nz-form-control style="width: 100%">
         <nz-input-group nzSearch [nzSuffix]="searchButton">
-          <input autocomplete="off" type="text" #address nz-input formControlName="search" placeholder="搜索地址" id="address" (keypress)="onMapReady($event, address.value)">
+          <input autocomplete="off" type="text" #address nz-input formControlName="search" placeholder="搜索地址" id="address" (keypress)="searchInputAddress($event, address.value)">
         </nz-input-group>
         <ng-template #searchButton>
           <button (click)="searchAddress(address.value)" nz-button nzType="primary" nzSearch><i class="anticon anticon-search"></i></button>
@@ -21,7 +21,7 @@
     </nz-form-item>
     <div style="margin-bottom: 10px">
       <div id="panel" class="panel" style="margin-bottom: 5px"></div>
-      <ngx-amap style="width: 100%; height: 300px;" [center]="[branchForm.value.longitude, branchForm.value.latitude]" [zoom]="16" (hotspotClick)="clickPoint($event)"></ngx-amap>
+      <ngx-amap style="width: 100%; height: 300px;" [center]="[branchForm.value.longitude, branchForm.value.latitude]" [zoom]="16" (hotspotClick)="clickPoint($event)" (ready)="onMapReady($event)"></ngx-amap>
     </div>
 
     <nz-form-item class="position" style="width: 100%">
