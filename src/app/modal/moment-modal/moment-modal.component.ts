@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Moment} from '../../model/Moment.model';
-import {NzMessageService, NzModalRef} from 'ng-zorro-antd';
+import {NzMessageService, NzModalRef, UploadFile} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-moment-modal',
@@ -11,6 +11,8 @@ export class MomentModalComponent implements OnInit {
 
   @Input() item: Moment;
   result: Moment;
+  previewImage = '';
+  previewVisible = false;
 
   fileList;
 
@@ -38,5 +40,10 @@ export class MomentModalComponent implements OnInit {
   closeDialog() {
     this.modal.destroy(this.result);
   }
+
+  handlePreview = (file: UploadFile) => {
+    this.previewImage = file.url || file.thumbUrl;
+    this.previewVisible = true;
+  };
 
 }
