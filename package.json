@@ -22,6 +22,7 @@
     "@angular/router": "^6.0.3",
     "@tinymce/tinymce-angular": "^2.0.0",
     "core-js": "^2.5.4",
+    "echarts": "^4.1.0",
     "less": "^2.7.3",
     "ng-zorro-antd": "^1.1.1",
     "ng2-ckeditor": "^1.2.1",

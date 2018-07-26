@@ -22,6 +22,10 @@ export class ReservationService {
       status: data.status
     })
   }
+
+  getReservationsByStatus(enterpriseId: number, status: string): Observable<any> {
+    return this._http.get(`/api/v1/enterprise/${enterpriseId}/reservation/list?status=${status}`)
+  }
 }
 
 export class TrialReservationDetail {

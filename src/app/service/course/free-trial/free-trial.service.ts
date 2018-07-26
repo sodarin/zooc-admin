@@ -11,6 +11,10 @@ export class FreeTrialService {
 
   constructor(private _http: HttpClient) { }
 
+  getAllFreeTrials(enterpriseId: number): Observable<any> {
+    return this._http.get(`/api/v1/enterprise/${enterpriseId}/trial/list`);
+  }
+
   getFreeTrialByEnterpriseId(enterpriseId: number, pageSize: number, pageIndex: number, filterConditions?: any): Observable<any> {
     return this._http.get(`/api/v1/enterprise/${enterpriseId}/trial/list?usePagination=true&targetPage=${pageIndex}&pageSize=${pageSize}&nameContaining=${filterConditions.name}&branchId=${filterConditions.branchId}&categoryId=${filterConditions.categoryId}&lecturerNameContaining=${filterConditions.lecturerName}`)
   }

@@ -1,23 +1,37 @@
-<div [ngStyle]="{width: '100%', background: '#fff', 'margin-top': '30px'}">
-  <nz-calendar (nzValueChange)="onValueChange($event)"></nz-calendar>
-</div>
-<div style="margin-top: 28px;">
-  <div nz-row [nzGutter]="32" [nzType]="'flex'" [nzJustify]="'space-between'">
+<div>
+  <div style="margin-top: 28px;" nz-row [nzGutter]="32" [nzType]="'flex'" [nzJustify]="'space-between'">
+    <div nz-col [nzSpan]="12">
+      <nz-tabset style="background: #ffffff;">
+        <nz-tab nzTitle="精品课程类别">
+          <div id="courseChart" style="height: 277px; background: white"></div>
+        </nz-tab>
+        <nz-tab [nzTitle]="'试听课程类别'">
+          <div id="trialChart" style="height: 277px; background: white"></div>
+        </nz-tab>
+      </nz-tabset>
+    </div>
+
+    <div [ngStyle]="{background: '#ffffff'}" nz-col [nzSpan]="12">
+      <nz-calendar (nzValueChange)="onValueChange($event)"></nz-calendar>
+    </div>
+  </div>
+
+  <div style="margin-top: 28px;" nz-row [nzGutter]="32" [nzType]="'flex'" [nzJustify]="'space-between'">
     <div nz-col [nzSpan]="8">
       <nz-card [nzBordered]="false">
         <h2>课程</h2>
         <div class="data">
           <div class="item">
             <p>课程总数</p>
-            <h1>152</h1>
+            <h1>{{totalCourse}}</h1>
           </div>
           <div class="item">
             <p>上月课程总数</p>
-            <h1>150</h1>
+            <h1>{{lastMonthTotalCourse}}</h1>
           </div>
           <div class="item">
             <p>增加课程</p>
-            <h1>2</h1>
+            <h1>{{totalCourse - lastMonthTotalCourse}}</h1>
           </div>
         </div>
       </nz-card>
@@ -29,15 +43,15 @@
         <div class="data">
           <div class="item">
             <p>订单总数</p>
-            <h1>100</h1>
+            <h1>{{totalOrder}}</h1>
           </div>
           <div class="item">
             <p>上月订单总数</p>
-            <h1>88</h1>
+            <h1>{{lastMonthTotalOrder}}</h1>
           </div>
           <div class="item">
             <p>增加订单</p>
-            <h1>12</h1>
+            <h1>{{totalOrder - lastMonthTotalOrder}}</h1>
           </div>
         </div>
       </nz-card>
@@ -49,20 +63,21 @@
         <div class="data">
           <div class="item">
             <p>预约总数</p>
-            <h1>15002</h1>
+            <h1>{{totalReservation}}</h1>
           </div>
           <div class="item">
             <p>上月预约总数</p>
-            <h1>13000</h1>
+            <h1>{{lastMonthTotalReservation}}</h1>
           </div>
           <div class="item">
             <p>增加预约</p>
-            <h1>2002</h1>
+            <h1>{{totalReservation - lastMonthTotalReservation}}</h1>
           </div>
         </div>
       </nz-card>
     </div>
   </div>
+
 
 
 

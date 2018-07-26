@@ -16,6 +16,10 @@ export class OrderService {
     return this._http.get(`/api/v1/enterprise/${enterpriseId}/order/list?usePagination=true&pageSize=${pageSize}&targetPage=${pageIndex}&orderId=${filterConditions.orderId}&courseNameContaining=${filterConditions.name}&status=${filterConditions.status}`)
   }
 
+  getOrdersByStatus(enterpriseId: number, status: string): Observable<any> {
+    return this._http.get(`/api/v1/enterprise/${enterpriseId}/order/list?status=${status}`);
+  }
+
 
 
 

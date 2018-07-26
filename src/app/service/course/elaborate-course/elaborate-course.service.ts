@@ -13,6 +13,10 @@ export class ElaborateCourseService {
 
   constructor(private _http: HttpClient) { }
 
+  getAllElaborateCourse(enterpriseId: number): Observable<any> {
+    return this._http.get(`/api/v1/enterprise/${enterpriseId}/course/list`)
+  }
+
 
   getElaborateCourseByEnterpriseId(enterpriseId: number, pageSize: number, pageIndex: number): Observable<any> {
     return this._http.get(`/api/v1/enterprise/${enterpriseId}/course/list?usePagination=true&targetPage=${pageIndex}&pageSize=${pageSize}`)
