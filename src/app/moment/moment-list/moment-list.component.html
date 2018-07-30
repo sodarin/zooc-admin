@@ -1,36 +1,47 @@
-<div style="width: 100%;" class="list">
-  <div style="margin-left: 20px; margin-top: 10px;" class="detail">
-    <span>发布时间：{{item.time}}</span>
-    <span style="margin-left: 40px;">点赞数：{{item.likeNum}}</span>
-  </div>
-  <div style="margin-left: 20px; margin-top: 5px;" class="moment-content">
-    <div style="font-size: 18px;">朋友圈内容</div>
-    <span *ngIf="!isEditing" class="introduction">{{item.content}}</span>
-    <label>
-      <textarea style="width: 80%" [(ngModel)]="item.content" autofocus="autofocus" *ngIf="isEditing" nz-input nzAutosize>{{item.content}}</textarea>
-    </label>
-    <i *ngIf="!isEditing" class="anticon anticon-edit" (click)="edit()"></i>
-    <i nz-popconfirm nzTitle="确认修改？" (nzOnConfirm)="confirm(item)" (nzOnCancel)="cancel(item)" *ngIf="isEditing" class="anticon anticon-check" (click)="edit"></i>
-  </div>
-
-  <div style="margin-left: 20px;" class="upload-picture">
-    <span class="title" style="font-size: 18px; line-height: 60px; color: #000;">朋友圈图片</span>
-    <nz-upload
-      nzAction="https://jsonplaceholder.typicode.com/posts/"
-      nzListType="picture-card"
-      [(nzFileList)]="fileList"
-      [nzShowButton]="fileList.length < 3"
-      [nzPreview]="handlePreview">
-      <i class="anticon anticon-plus"></i>
-      <div class="upload-text">Upload</div>
-    </nz-upload>
-    <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
-              (nzOnCancel)="previewVisible=false">
-      <ng-template #modalContent>
-        <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }"/>
+<nz-list class="clearfix" *ngIf="moments != null && moments.length > 0"
+         [nzDataSource]="moments"
+         [nzItemLayout]="'vertical'"
+         [nzRenderItem]="item"
+         [nzPagination]="pagination" >
+  <ng-template #item let-item>
+    <nz-list-item [nzContent]="content" [nzActions]="[likeAction, msgAction, editAction]">
+      <ng-template #content>
+        <div class="moment-content">
+          <span *ngIf="!item.isEditing" class="text">{{item.content}}</span>
+          <textarea nz-input *ngIf="item.isEditing" autofocus [(ngModel)]="item.content" [nzAutosize]="true" style="margin-bottom: 20px;"></textarea>
+          <div class="clearfix upload-picture">
+            <nz-upload
+              nzAction="https://jsonplaceholder.typicode.com/posts/"
+              nzListType="picture-card"
+              nzMultiple="true"
+              [(nzFileList)]="item.fileList"
+              [nzShowButton]="item.fileList.length < 9"
+              [nzPreview]="handlePreview">
+              <i class="anticon anticon-plus"></i>
+              <div class="ant-upload-text">Upload</div>
+            </nz-upload>
+            <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
+              <ng-template #modalContent>
+                <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
+              </ng-template>
+            </nz-modal>
+          </div>
+        </div>
       </ng-template>
-    </nz-modal>
-  </div>
-
-  <div style="width: 100%; height: 30px;" class="empty-space"></div>
-</div>
+      <ng-template #likeAction><i class="anticon anticon-like-o" style="margin-right: 8px;"></i>{{item.likeNum}}</ng-template>
+      <ng-template #msgAction><i class="anticon anticon-message" (click)="checkMsg()"></i></ng-template>
+      <ng-template #editAction>
+        <i *ngIf="!item.isEditing" class="anticon anticon-edit" (click)="edit(item)"></i>
+        <i *ngIf="item.isEditing" class="anticon anticon-check" style="margin-right: 20px;" (click)="confirm(item)"></i>
+        <i *ngIf="item.isEditing" class="anticon anticon-close" (click)="cancel(item)"></i>
+      </ng-template>
+      <nz-list-item-meta
+        [nzDescription]="nzTime">
+        <ng-template #nzTime><span style="margin-left: 20px; margin-top: 10px; display: block;">{{item.time | date: 'yyyy 年 M 月 d 日 HH:mm:ss'}}</span></ng-template>
+      </nz-list-item-meta>
+    </nz-list-item>
+  </ng-template>
+  <ng-template #pagination>
+    <nz-pagination [(nzPageIndex)]="pageIndex" [nzTotal]="total" [nzPageSize]="6" (nzPageIndexChange)="newPage()"></nz-pagination>
+  </ng-template>
+</nz-list>

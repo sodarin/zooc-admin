@@ -1,42 +1,8 @@
 <div class="content">
   <button style="margin-top: 28px" nz-button [nzType]="'primary'" (click)="addNewMoment()">添加朋友圈</button>
-  <nz-list class="clearfix" *ngIf="moments != null && moments.length > 0"
-    [nzDataSource]="moments"
-    [nzItemLayout]="'vertical'"
-    [nzRenderItem]="item">
-    <ng-template #item let-item>
-      <nz-list-item [nzContent]="content" [nzActions]="[likeAction, msgAction]">
-        <ng-template #content>
-          <div class="moment-content">
-            <span class="text">{{item.content}}</span>
-            <div class="clearfix upload-picture">
-              <nz-upload
-                nzAction="https://jsonplaceholder.typicode.com/posts/"
-                nzListType="picture-card"
-                nzMultiple="true"
-                [(nzFileList)]="item.fileList"
-                [nzShowButton]="item.fileList.length < 9"
-                [nzPreview]="handlePreview">
-                <i class="anticon anticon-plus"></i>
-                <div class="ant-upload-text">Upload</div>
-              </nz-upload>
-              <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
-                <ng-template #modalContent>
-                  <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
-                </ng-template>
-              </nz-modal>
-            </div>
-          </div>
-        </ng-template>
-        <ng-template #likeAction><i class="anticon anticon-like-o" style="margin-right: 8px;"></i>{{item.likeNum}}</ng-template>
-        <ng-template #msgAction><i class="anticon anticon-message"></i></ng-template>
-        <nz-list-item-meta
-          [nzDescription]="nzTime">
-          <ng-template #nzTime><span style="margin-left: 20px; margin-top: 10px; display: block;">{{item.time | date: 'yyyy 年 M 月 d 日 HH:mm:ss'}}</span></ng-template>
-        </nz-list-item-meta>
-      </nz-list-item>
-    </ng-template>
-  </nz-list>
+
+  <app-moment-list *ngIf="moments !==null && moments.length > 0" [moments]="moments" [total]="totalSize" [pageIndex]="targetPage" (editContent)="updateContent($event)" (pageEvent)="turnToNewPage($event)"></app-moment-list>
+
 
   <div *ngIf="moments == null || moments.length < 0" class="no-moment">
     <span>暂无朋友圈</span>

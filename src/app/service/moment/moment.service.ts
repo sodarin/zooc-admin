@@ -11,8 +11,8 @@ export class MomentService {
 
   constructor(private _http: HttpClient) { }
 
-  getAllMoments(enterpriseId: number): Observable<any> {
-    return this._http.get(`/api/v1/enterprise/${enterpriseId}/moment/list`);
+  getAllMoments(enterpriseId: number, usePagination: boolean, targetPage: number, pageSize: number): Observable<any> {
+    return this._http.get(`/api/v1/enterprise/${enterpriseId}/moment/list?usePagination=${usePagination}&targetPage=${targetPage}&pageSize=${pageSize}`);
   }
 
   getMomentImgsByMomentId(momentId: number): Observable<any> {
@@ -34,6 +34,21 @@ export class MomentService {
     }, httpOptions)
   }
 
+  updateMoment(data: any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this._http.put(`/api/v1/moment/${data.momentId}`, {
+      content: data.content
+    }, httpOptions)
+  }
+
+  getCommentsByMomentId(momentId: number): Observable<any> {
+    return this._http.get(`/api/v1/moment/${momentId}/comment/list`);
+  }
+
 
 }
 
@@ -42,5 +57,17 @@ export class MomentImg {
     public momentImgIndex: number,
     public momentId: number,
     public imgUrl: string
+  ) {}
+}
+
+export class MomentComment {
+  constructor(
+    public momentCommentId: number,
+    public userId: number,
+    public username: string,
+    public userEmail: string,
+    public userMobile: string,
+    public content: string,
+    public time: Date
   ) {}
 }

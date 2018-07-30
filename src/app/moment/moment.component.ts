@@ -1,75 +1,46 @@
-import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Moment} from '../model/Moment.model';
 import {MomentService} from '../service/moment/moment.service';
-import {CourseModalComponent} from '../modal/course-modal/course-modal.component';
-import {NzMessageService, NzModalService, UploadFile} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {MomentModalComponent} from '../modal/moment-modal/moment-modal.component';
-
+import {MomentListComponent} from './moment-list/moment-list.component';
 @Component({
   selector: 'app-moment',
   templateUrl: './moment.component.html',
   styleUrls: ['./moment.component.css']
 })
-export class MomentComponent implements OnInit {
+export class MomentComponent implements OnInit, AfterViewChecked {
 
 
-  moments: Moment[];
+  moments: Moment[] = [];
   previewImage = '';
   previewVisible = false;
   uid: number = 1;
   pictureList = [];
+  targetPage = 1;
+  totalSize: number = 9;
+
+
+
+  @ViewChild(MomentListComponent) momentList: MomentListComponent;
 
   constructor(private momentService$: MomentService, private modalService: NzModalService, private message: NzMessageService) {
-    window.onload = () => {
-      this.placeListItem();
-    }
   }
 
   ngOnInit() {
-    this.getMoments();
-    window.onresize = () => {
-      this.placeListItem();
-    };
+    this.getMoments(1)
   }
 
-  placeListItem() {
-    let listItems;
-    listItems = document.getElementsByTagName('nz-list-item');
-    let pos = listItems[0].getBoundingClientRect();
-    let leftX = 0;
-    let leftY = pos.height;
-    let rightX = pos.width;
-    let rightY = 0;
-    for (let i = 0; i < listItems.length; i++) {
-      if (i == 1) {
-        listItems[1].style.left = `${rightX+20}px`;
-        listItems[1].style.top = `${rightY}px`;
-        pos = listItems[1].getBoundingClientRect();
-        rightY += pos.height;
-        console.log(rightY)
-      }
-      if (i != 0 && i % 2 == 0){
-        listItems[i].style.left = `${leftX}px`;
-        listItems[i].style.top = `${leftY+20}px`;
-        pos = listItems[i].getBoundingClientRect();
-        leftY = pos.height + 20 + leftY;
-      }
-      if (i != 1 && i % 2 == 1){
-        listItems[i].style.left = `${rightX+20}px`;
-        console.log(rightY);
-        listItems[i].style.top = `${rightY+20}px`;
-        pos = listItems[i].getBoundingClientRect();
-        rightY = pos.height + 20 + rightY;
-      }
-    }
-    let parentItem;
-    parentItem = document.getElementsByTagName('nz-list');
-    parentItem[0].style.height = rightY > leftY ? `${rightY + 20}px`: `${leftY + 20}px`;
-
+  ngAfterViewChecked() {
+    this.momentList.placeListItem();
   }
 
-  getMoments() {
-    this.momentService$.getAllMoments(1).subscribe( result => {
+
+
+
+  getMoments(targetPage: number) {
+    this.momentService$.getAllMoments(1, true, targetPage, 6).subscribe( result => {
+      this.totalSize = result.total;
       this.moments = result.list;
       this.moments.forEach(moment => {
         moment.fileList = [];
@@ -87,22 +58,24 @@ export class MomentComponent implements OnInit {
         })
       });
     });
-
   }
 
   createMoment(data: any) {
     this.momentService$.createMoment(data).subscribe(result => {
-      this.getMoments();
+      this.getMoments(1);
+      this.targetPage = 1;
       this.message.success('添加朋友圈成功');
     }, error2 => {
       this.message.error(error2.error);
     })
   }
 
-  handlePreview = (file: UploadFile) => {
-    this.previewImage = file.url || file.thumbUrl;
-    this.previewVisible = true;
-  };
+  turnToNewPage(event) {
+    this.getMoments(event);
+    this.targetPage = event;
+  }
+
+
 
   addNewMoment() {
     const modal = this.modalService.create({
@@ -121,6 +94,14 @@ export class MomentComponent implements OnInit {
         this.createMoment(result);
       }
     });
+  }
+
+  updateContent(event) {
+    this.momentService$.updateMoment(event).subscribe(result => {
+      this.message.success('修改内容成功');
+    }, error2 => {
+      this.message.error(error2.error);
+    })
   }
 
 }

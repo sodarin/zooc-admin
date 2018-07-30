@@ -1,27 +1,58 @@
-.introduction {
-  display: inline-block;
-  width: 80%;
-  word-wrap: break-word;
-  word-break: normal;
-  font-size: 16px;
-  color: rgba(0, 0, 0, .75);
+:host ::ng-deep .anticon-plus {
+  font-size: 32px;
+  color: #999;
 }
-
-.list {
-  background: white;
-  margin: 20px;
+:host ::ng-deep .ant-upload-text {
+  margin-top: 8px;
+  color: #666;
 }
-
-.anticon-check, .anticon-edit {
-  margin-left: 40px;
+:host ::ng-deep .ant-list-pagination {
+  position: absolute;
 }
-
-.anticon-check:hover, .anticon-edit:hover {
-  cursor: pointer;
-  color: #1890ff;
+nz-list {
+  margin-top: 28px;
 }
-.detail {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+/*:host ::ng-deep .ant-spin-container {*/
+/*display: flex;*/
+/*flex-direction: row;*/
+/*justify-content: space-between;*/
+/*}*/
+/*.first-col, .second-col {*/
+/*display: flex;*/
+/*flex-direction: row;*/
+/*justify-content: flex-start;*/
+/*}*/
+nz-list-item {
+  background-color: white;
+  width: 48%;
+  margin-right: 10px;
+  position: absolute;
+}
+:host ::ng-deep .ant-list-grid .ant-list-item {
+  padding-bottom: 10px;
+}
+.upload-picture {
+  width: 70%;
+}
+.moment-content {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.text {
+  display: block;
+  margin-bottom: 20px;
+}
+:host ::ng-deep .ant-list-vertical .ant-list-item-action {
+  margin-left: 20px;
+}
+:host ::ng-deep .ant-list-item-extra {
+  display: block;
 }
