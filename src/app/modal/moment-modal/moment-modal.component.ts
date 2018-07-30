@@ -20,19 +20,14 @@ export class MomentModalComponent implements OnInit {
   constructor(private message: NzMessageService, private modal: NzModalRef) { }
 
   ngOnInit() {
-    this.fileList = [
-      {
-        status: 'done',
-        url: this.item.imgUrl
-      }
-    ];
+    this.fileList = [];
   }
 
   submit() {
     if (this.content == ''){
       this.message.error('内容不能为空');
     }else{
-      this.result = new Moment(this.item.momentId, '1', this.content, '2018-7-12 11:12:20', 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png', 0);
+      this.result = new Moment(1, 1, this.content, new Date().getTime());
       this.modal.destroy(this.result);
     }
   }

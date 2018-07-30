@@ -103,41 +103,6 @@ export class CourseComponent implements OnInit {
   }
 
 
-  // sort(sortName: string, value: boolean): void {
-  //   this.sortName = sortName;
-  //   this.sortValue = value;
-  //   for (const key in this.sortMap) {
-  //     this.sortMap[ key ] = (key === sortName ? value : null);
-  //   }
-  //   this.search();
-  // }
-
-  // filterAddressChange(value: string[]): void {
-  //   this.searchAddress = value;
-  //   this.search();
-  // }
-
-  // filterTypeChange(value: string[]): void {
-  //   this.searchType = value;
-  //   this.searchCourseType();
-  // }
-
-  // search(): void {
-  //   const filterFunc = (item) => {
-  //     return (this.searchAddress.length ? this.searchAddress.some(address => item.address.indexOf(address) !== -1) : true) &&
-  //       (item.title.indexOf(this.searchValue) !== -1);
-  //   };
-  //   const data = this.courses.filter(item => filterFunc(item));
-  //   this.displayData = data.sort((a, b) => (this.sortValue === 'ascend') ? (a[ this.sortName ] > b[ this.sortName ] ? 1 : -1) : (b[ this.sortName ] > a[ this.sortName ] ? 1 : -1));
-  // }
-
-  // searchCourseType() :void {
-  //   const filterFunc = (item) => {
-  //     return this.searchType.some(type => item.type.indexOf(type) !== -1)
-  //   };
-  //   const data = this.courses.filter(item => filterFunc(item));
-  //   this.displayData = data.sort((a, b) => (this.sortValue === 'ascend') ? (a[ this.sortName ] > b[ this.sortName ] ? 1 : -1) : (b[ this.sortName ] > a[ this.sortName ] ? 1 : -1));
-  // }
 
   edit(data: any): void {
     const modal = this.modalService.create({

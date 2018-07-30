@@ -1,10 +1,13 @@
+import {MomentImg} from '../service/moment/moment.service';
+
 export class Moment {
   constructor(
-    public momentId: string,
-    public enterpriseId: string,
+    public momentId: number,
+    public enterpriseId: number,
     public content: string,
-    public time: string,
-    public imgUrl: string,
-    public likeNum: number
+    public time: number,
+    public likeNum?: number,
+    public imgList?: MomentImg[],
+    public fileList?: any
   ){}
 }

@@ -1,23 +1,46 @@
 import { Injectable } from '@angular/core';
 import {Moment} from '../../model/Moment.model';
+import {Observable} from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MomentService {
 
-  moments: Moment[] = [
-    new Moment('1', '1', 'asdfasdfawefasdfasdfasdf','2018-7-2 14:20:31', 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png', 10),
-    new Moment('2', '1', 'asdfasdfawefasdfasdfasdf','2018-7-2 14:20:31', 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png', 10),
-    new Moment('3', '1', 'asdfasdfawefasdfasdfasdf','2018-7-2 14:20:31', 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png', 10),
-    new Moment('4', '1', 'asdfasdfawefasdfasdfasdf','2018-7-2 14:20:31', 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png', 10),
-    new Moment('5', '1', 'asdfasdfawefasdfasdfasdf','2018-7-2 14:20:31', 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png', 10),
-    new Moment('6', '1', 'asdfasdfawefasdfasdfasdf','2018-7-2 14:20:31', 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png', 10),
-  ];
 
-  constructor() { }
+  constructor(private _http: HttpClient) { }
 
-  getMoments(): Moment[] {
-    return this.moments;
+  getAllMoments(enterpriseId: number): Observable<any> {
+    return this._http.get(`/api/v1/enterprise/${enterpriseId}/moment/list`);
   }
+
+  getMomentImgsByMomentId(momentId: number): Observable<any> {
+    return this._http.get(`/api/v1/moment/${momentId}/img/list`)
+  }
+
+  getTotalLikeAmountByMomentId(momentId: number): Observable<any> {
+    return this._http.get(`/api/v1/moment/${momentId}/like/total`);
+  }
+
+  createMoment(data: any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this._http.post(`/api/v1/enterprise/${data.enterpriseId}/moment`, {
+      content: data.content
+    }, httpOptions)
+  }
+
+
+}
+
+export class MomentImg {
+  constructor(
+    public momentImgIndex: number,
+    public momentId: number,
+    public imgUrl: string
+  ) {}
 }

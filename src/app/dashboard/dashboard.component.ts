@@ -42,7 +42,9 @@ export class DashboardComponent implements OnInit {
         this.elaborateCourse = result.list;
         this.categories.forEach((item) => {
           let courses = this.elaborateCourse.filter(course => course.categoryId == item.categoryId);
-          this.courseCategoryList.push({value: courses.length, name: item.name});
+          if (courses.length != 0) {
+            this.courseCategoryList.push({value: courses.length, name: item.name});
+          }
           this.totalCourse += courses.length;
         });
         this.courseChart = echarts.init(document.getElementById('courseChart'));
@@ -83,7 +85,9 @@ export class DashboardComponent implements OnInit {
         this.freeTrials = result.list;
         this.categories.forEach((item) => {
           let trial = this.freeTrials.filter(course => course.categoryId == item.categoryId);
-          this.trialCategoryList.push({value: trial.length, name: item.name});
+          if (trial.length != 0) {
+            this.trialCategoryList.push({value: trial.length, name: item.name});
+          }
           this.totalCourse += trial.length;
         });
         this.trialChart = echarts.init(document.getElementById('trialChart'));
