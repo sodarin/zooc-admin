@@ -29,7 +29,7 @@
         </div>
       </ng-template>
       <ng-template #likeAction><i class="anticon anticon-like-o" style="margin-right: 8px;"></i>{{item.likeNum}}</ng-template>
-      <ng-template #msgAction><i class="anticon anticon-message" (click)="checkMsg()"></i></ng-template>
+      <ng-template #msgAction><i class="anticon anticon-message" (click)="checkMsg(item)"></i></ng-template>
       <ng-template #editAction>
         <i *ngIf="!item.isEditing" class="anticon anticon-edit" (click)="edit(item)"></i>
         <i *ngIf="item.isEditing" class="anticon anticon-check" style="margin-right: 20px;" (click)="confirm(item)"></i>

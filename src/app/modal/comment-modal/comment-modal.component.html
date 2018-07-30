@@ -1,0 +1,24 @@
+<div *ngIf="data != null && data.length > 0">
+  <nz-list [nzDataSource]="data" [nzRenderItem]="item" [nzItemLayout]="'horizontal'" [nzPagination]="pagination">
+    <ng-template #item let-item>
+      <nz-list-item [nzActions]="[deleteAction]">
+        <ng-template #deleteAction><i nz-popconfirm nzTitle="确认删除？" (nzOnConfirm)="deleteComment(item)" class="anticon anticon-close"></i></ng-template>
+        <nz-list-item-meta [nzTitle]="title" [nzDescription]="description">
+          <ng-template #title>
+            <span style="font-weight: bold; margin-bottom: 10px; display: block">{{item.username}}</span>
+            <p>{{item.content}}</p>
+          </ng-template>
+          <ng-template #description>
+            <span style="font-size: 12px;">{{item.time | date: 'yyyy 年 MM 月 dd 日 HH:mm:ss'}}</span>
+          </ng-template>
+        </nz-list-item-meta>
+      </nz-list-item>
+    </ng-template>
+    <ng-template #pagination>
+      <nz-pagination [nzPageSize]="5" [nzTotal]="total" [(nzPageIndex)]="pageIndex" (nzPageIndexChange)="turnToNewPage()"></nz-pagination>
+    </ng-template>
+  </nz-list>
+</div>
+<div *ngIf="data == null || data.length == 0">
+  <span>暂无评论</span>
+</div>

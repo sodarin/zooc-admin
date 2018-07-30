@@ -1,12 +1,13 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
-import {NzMessageService, UploadFile} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService, UploadFile} from 'ng-zorro-antd';
+import {CommentModalComponent} from '../../modal/comment-modal/comment-modal.component';
 
 @Component({
   selector: 'app-moment-list',
   templateUrl: './moment-list.component.html',
   styleUrls: ['./moment-list.component.css'],
 })
-export class MomentListComponent implements OnInit, OnChanges {
+export class MomentListComponent implements OnInit {
 
   @Input() moments;
   @Input() total;
@@ -18,7 +19,7 @@ export class MomentListComponent implements OnInit, OnChanges {
   previewImage = '';
   previewVisible = false;
 
-  constructor(private message: NzMessageService) { }
+  constructor(private message: NzMessageService, private modalService: NzModalService) { }
 
   ngOnInit() {
     window.onresize = () => {
@@ -26,9 +27,6 @@ export class MomentListComponent implements OnInit, OnChanges {
     };
   }
 
-  ngOnChanges() {
-    console.log('pageIndex: ' + this.pageIndex)
-  }
 
 
   placeListItem() {
@@ -76,8 +74,15 @@ export class MomentListComponent implements OnInit, OnChanges {
     this.pageEvent.emit(this.pageIndex);
   }
 
-  checkMsg() {
-
+  checkMsg(item: any) {
+    const modal = this.modalService.create({
+      nzTitle: '查看评论',
+      nzContent: CommentModalComponent,
+      nzComponentParams: {
+        item: item
+      },
+      nzFooter: null
+    })
   }
 
 

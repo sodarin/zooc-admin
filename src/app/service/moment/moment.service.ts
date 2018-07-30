@@ -45,8 +45,12 @@ export class MomentService {
     }, httpOptions)
   }
 
-  getCommentsByMomentId(momentId: number): Observable<any> {
-    return this._http.get(`/api/v1/moment/${momentId}/comment/list`);
+  getCommentsByMomentId(momentId: number, targetPage: number): Observable<any> {
+    return this._http.get(`/api/v1/moment/${momentId}/comment/list?usePagination=true&targetPage=${targetPage}&pageSize=5`);
+  }
+
+  deleteCommentByCommentId(commentMomentId: number): Observable<any> {
+    return this._http.delete(`/api/v1/comment/${commentMomentId}`)
   }
 
 
