@@ -159,7 +159,7 @@ export class FreeTrailComponent implements OnInit {
     const item = {
       name: '',
       detail: '',
-      imgUrl: 'https://img.moegirl.org/common/e/e0/9694490.jpg',
+      imgUrl: '',
       categoryId: 1,
       status: 'AVAILABLE',
       branchName: '',

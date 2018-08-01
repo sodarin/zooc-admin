@@ -60,12 +60,16 @@ export class CourseModalComponent implements OnInit {
       type: [this.item.categoryName],
       statusDesc: [this.item.statusDesc, [Validators.required]]
     });
-    this.fileList = [
-      {
-        status: 'done',
-        url: this.item.imgUrl
-      }
-    ];
+     if (this.item.imgUrl == ''){
+       this.fileList = [];
+     } else {
+       this.fileList = [
+         {
+           status: 'done',
+           url: this.item.imgUrl
+         }
+       ]
+     }
     this.detailContent = this.item.detail;
     if(this.item.courseId != null) {
       await this.elaborateCourseService$.getCourseOfferings(this.item.courseId)
@@ -106,14 +110,14 @@ export class CourseModalComponent implements OnInit {
 
   submit() {
     this.courseOfferings = this.courseOfferings.filter(item => item.lecturerId !== undefined || item.branchId !== undefined);
-    if (this.courseForm.value.name == '' || this.courseForm.value.price == null || this.courseForm.value.type == '' || this.detailContent == '' || this.detailContent == null) {
+    if (this.courseForm.value.name == '' || this.courseForm.value.price == null || this.courseForm.value.type == '' || this.detailContent == '' || this.fileList.length == 0 || this.detailContent == null) {
       this.message.error('内容不能为空');
     }else {
       this.result = {
         courseId: this.item.courseId,
         name: this.courseForm.value.name,
         detail: this.detailContent,
-        imgUrl: this.item.imgUrl,
+        imgUrl: this.fileList[0].response.url,
         categoryId: this.courseForm.value.type,
         price: this.courseForm.value.price,
         courseOfferings: this.courseOfferings
@@ -136,6 +140,19 @@ export class CourseModalComponent implements OnInit {
     this.previewImage = file.url || file.thumbUrl;
     this.previewVisible = true;
   };
+
+  handleRemove = (file: UploadFile) => {
+    this.fileList = this.fileList.filter(photo => photo.status == 'done');
+  };
+
+  handleChange(info: {file: UploadFile}) {
+    if (info.file.status == 'done') {
+      if (this.fileList.length > 1) {
+        this.fileList.splice(0, 1);
+        console.log(this.fileList);
+      }
+    }
+  }
 
   addInput() {
     this.courseOfferings.push(new CourseOffering(this.courseOfferings.length + 1));

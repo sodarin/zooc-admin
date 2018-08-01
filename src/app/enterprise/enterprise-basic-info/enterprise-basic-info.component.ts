@@ -16,6 +16,8 @@ export class EnterpriseBasicInfoComponent implements OnInit {
   enterprise: Enterprise;
 
   data: any;
+  videoUrl;
+  videoList = [];
 
 
   fileList = [];
@@ -81,22 +83,37 @@ export class EnterpriseBasicInfoComponent implements OnInit {
     item.isEditing = false;
   }
 
+  handleChange(info: {file: UploadFile}) {
+    if (info.file.status == 'done') {
+      this.fileList.splice(0, 1);
+      this.enterpriseService$.updateEnterprisePhoto(info.file.response.url).subscribe(result => {
+        this.message.success("图片上传成功")
+      }, error2 => {
+        this.message.error(error2.error);
+      })
+    }
+  }
+
+  handleVideoUpload({file, fileList}) {
+    if (file.status == 'done') {
+      if (fileList.length > 1) {
+        fileList.splice(0, 1);
+      }
+        this.videoUrl = file.response.url;
+        this.videoList = fileList;
+        console.log(this.videoList);
+        this.enterpriseService$.updateEnterpriseVideo(file.response.url).subscribe(result => {
+          this.message.success('视频上传成功')
+        }, error2 => {
+          this.message.error(error2.error);
+        })
+      }
+  }
+
   handlePreview = (file: UploadFile) => {
     this.previewImage = file.url || file.thumbUrl;
     this.previewVisible = true;
   };
-
-  handleChange({ file, fileList }): void {
-    const status = file.status;
-    if (status !== 'uploading') {
-      console.log(file, fileList);
-    }
-    if (status === 'done') {
-      this.message.success(`${file.name} file uploaded successfully.`);
-    } else if (status === 'error') {
-      this.message.error(`${file.name} file upload failed.`);
-    }
-  }
 
   updateDetail(event: string) {
     this.enterpriseService$.updateEnterpriseDetail(event)

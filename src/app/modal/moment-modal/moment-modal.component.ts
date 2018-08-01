@@ -27,7 +27,7 @@ export class MomentModalComponent implements OnInit {
     if (this.content == ''){
       this.message.error('内容不能为空');
     }else{
-      this.result = new Moment(1, 1, this.content, new Date().getTime());
+      this.result = new Moment(1, 1, this.content, new Date().getTime(), this.fileList);
       this.modal.destroy(this.result);
     }
   }
@@ -40,5 +40,11 @@ export class MomentModalComponent implements OnInit {
     this.previewImage = file.url || file.thumbUrl;
     this.previewVisible = true;
   };
+
+  handleRemove = (removeFile: UploadFile) => {
+    this.fileList = this.fileList.filter(file => file.status == 'done')
+  }
+
+
 
 }

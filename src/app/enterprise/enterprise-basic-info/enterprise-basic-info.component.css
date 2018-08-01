@@ -8,7 +8,7 @@ div.ant-list-item-meta-description {
   word-break: normal;
 }
 
-:host ::ng-deep .anticon-plus {
+:host ::ng-deep .anticon-sync {
   font-size: 32px;
   color: #999;
 }

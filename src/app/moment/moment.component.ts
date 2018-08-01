@@ -62,6 +62,18 @@ export class MomentComponent implements OnInit, AfterViewChecked {
 
   createMoment(data: any) {
     this.momentService$.createMoment(data).subscribe(result => {
+      data.momentId = result;
+      if (data.fileList !== null && data.fileList.length > 0) {
+        let imgUrls = [];
+        data.fileList.forEach(file => {
+          imgUrls.push(file.response.url)
+        });
+        this.momentService$.postPicture(imgUrls, data).subscribe( next => {
+          console.log(next);
+        }, error2 => {
+          this.message.error(error2.error);
+        });
+      }
       this.getMoments(1);
       this.targetPage = 1;
       this.message.success('添加朋友圈成功');

@@ -24,13 +24,14 @@
   <div class="upload-picture">
     <span class="title" style="font-size: 26px; line-height: 60px; color: #000;">企业图片上传</span>
     <nz-upload
-      nzAction="https://jsonplaceholder.typicode.com/posts/"
+      nzAction="/api/v1/file"
       nzListType="picture-card"
       [(nzFileList)]="fileList"
       [nzShowButton]="fileList.length < 3"
+      (nzChange)="handleChange($event)"
       [nzPreview]="handlePreview">
-      <i class="anticon anticon-plus"></i>
-      <div class="upload-text">Upload</div>
+      <i class="anticon anticon-sync"></i>
+      <div class="upload-text">Update</div>
     </nz-upload>
     <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
               (nzOnCancel)="previewVisible=false">
@@ -44,10 +45,9 @@
     <span class="title" style="font-size: 26px; line-height: 60px; color: #000;">企业视频上传</span>
     <nz-upload
       nzType="drag"
-      [nzMultiple]="true"
-      [nzLimit]="2"
-      nzAction="https://jsonplaceholder.typicode.com/posts/"
-      (nzChange)="handleChange($event)">
+      [nzLimit]="3"
+      nzAction="/api/v1/file"
+      (nzChange)="handleVideoUpload($event)">
       <p class="ant-upload-drag-icon">
         <i class="anticon anticon-inbox"></i>
       </p>

@@ -6,9 +6,9 @@ export class Moment {
     public enterpriseId: number,
     public content: string,
     public time: number,
+    public fileList?: any,
     public isEidting: boolean = false,
-    public likeNum?: number,
+    public likeNum = 0,
     public imgList?: MomentImg[],
-    public fileList?: any
   ){}
 }

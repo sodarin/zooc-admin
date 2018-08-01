@@ -30,6 +30,28 @@ export class EnterpriseService {
     return this._http.put(`/api/v1/enterprise/${this.currentEnterprise.enterpriseId}`, JSON.stringify(body), httpOptions)
   }
 
+  updateEnterprisePhoto(imgUrl: string): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this._http.put(`/api/v1/enterprise/${this.currentEnterprise.enterpriseId}`, {
+      imgUrl: imgUrl? imgUrl: ''
+    }, httpOptions)
+  }
+
+  updateEnterpriseVideo(videoUrl: string): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this._http.put(`/api/v1/enterprise/${this.currentEnterprise.enterpriseId}`, {
+      videoUrl: videoUrl? videoUrl: ''
+    }, httpOptions)
+  }
+
   updateEnterpriseDetail(detail: string): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({

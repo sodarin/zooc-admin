@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {NzMessageService, NzModalService, UploadFile} from 'ng-zorro-antd';
 import {CommentModalComponent} from '../../modal/comment-modal/comment-modal.component';
+import {MomentService} from '../../service/moment/moment.service';
 
 @Component({
   selector: 'app-moment-list',
@@ -19,7 +20,7 @@ export class MomentListComponent implements OnInit {
   previewImage = '';
   previewVisible = false;
 
-  constructor(private message: NzMessageService, private modalService: NzModalService) { }
+  constructor(private message: NzMessageService, private modalService: NzModalService, private momentsService$: MomentService) { }
 
   ngOnInit() {
     window.onresize = () => {
@@ -67,7 +68,6 @@ export class MomentListComponent implements OnInit {
     let pageItem;
     pageItem = document.getElementsByClassName('content');
     pageItem[0].style.height = rightY > leftY ? `${rightY + 130}px`: `${leftY + 130}px`;
-
   }
 
   newPage() {
@@ -107,6 +107,21 @@ export class MomentListComponent implements OnInit {
   handlePreview = (file: UploadFile) => {
     this.previewImage = file.url || file.thumbUrl;
     this.previewVisible = true;
+  };
+
+
+
+  statusChange(info: {file: UploadFile}, item: any) {
+    if (info.file.status == 'done') {
+      let imgUrls = [];
+      imgUrls[0] = info.file.response.url;
+      this.momentsService$.postPicture(imgUrls, item).subscribe(result => {
+        this.message.success('图片上传成功')
+      }, error2 => {
+        this.message.error(error2.error)
+      });
+      console.log(info.file.response.url);
+    }
   }
 
 }

@@ -53,14 +53,25 @@ export class MomentService {
     return this._http.delete(`/api/v1/comment/${commentMomentId}`)
   }
 
+  postPicture(imgUrl: any, item: any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this._http.post(`/api/v1/moment/${item.momentId}/img`, {
+      imgUrls: imgUrl
+    }, httpOptions);
+  }
+
 
 }
 
 export class MomentImg {
   constructor(
-    public momentImgIndex: number,
-    public momentId: number,
-    public imgUrl: string
+    public imgUrl: string,
+    public momentImgIndex?: number,
+    public momentId?: number,
   ) {}
 }
 

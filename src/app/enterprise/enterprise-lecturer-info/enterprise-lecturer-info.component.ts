@@ -76,7 +76,7 @@ export class EnterpriseLecturerInfoComponent implements OnInit {
   }
 
   addNewData() {
-    const item = new Lecturer('', this.loginService$.currentAdmin.enterpriseId, '', 'https://img.moegirl.org/common/e/e0/9694490.jpg',  '');
+    const item = new Lecturer('', this.loginService$.currentAdmin.enterpriseId, '', '',  '');
     const modal = this.modalService.create({
       nzTitle: '新增讲师',
       nzContent: LecturerModalComponent,

@@ -11,11 +11,11 @@
           <textarea nz-input *ngIf="item.isEditing" autofocus [(ngModel)]="item.content" [nzAutosize]="true" style="margin-bottom: 20px;"></textarea>
           <div class="clearfix upload-picture">
             <nz-upload
-              nzAction="https://jsonplaceholder.typicode.com/posts/"
+              nzAction="/api/v1/file"
               nzListType="picture-card"
-              nzMultiple="true"
               [(nzFileList)]="item.fileList"
               [nzShowButton]="item.fileList.length < 9"
+              (nzChange)="statusChange($event, item)"
               [nzPreview]="handlePreview">
               <i class="anticon anticon-plus"></i>
               <div class="ant-upload-text">Upload</div>

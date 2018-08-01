@@ -12,10 +12,12 @@
     <div class="upload-meta-data" style="margin-top: 20px; background: white; width: 100%">
       <div class="upload-picture">
         <nz-upload
-          nzAction="https://jsonplaceholder.typicode.com/posts/"
+          nzAction="/api/v1/file"
           nzListType="picture-card"
           [(nzFileList)]="fileList"
           [nzShowButton]="fileList.length < 3"
+          [nzRemove]="handleRemove"
+          (nzChange)="handleChange($event)"
           [nzPreview]="handlePreview">
           <i class="anticon anticon-plus"></i>
           <div class="upload-text">Upload</div>

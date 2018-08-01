@@ -58,14 +58,16 @@ export class TrialModalComponent implements OnInit {
       lecturerControl: [this.item.lecturerName],
       datePicker: [new Date(this.item.releaseTime)]
     });
-
-
-    this.fileList = [
-      {
-        status: 'done',
-        url: this.item.imgUrl
-      }
-    ];
+    if (this.item.imgUrl == ''){
+      this.fileList = [];
+    } else {
+      this.fileList = [
+        {
+          status: 'done',
+          url: this.item.imgUrl
+        }
+      ]
+    }
 
     if(this.item.trialId != null) {
       await this.freeTrialService$.getFreeTrialDetail(this.item.trialId)
@@ -98,7 +100,7 @@ export class TrialModalComponent implements OnInit {
   }
 
   submit() {
-    if (this.trialForm.value.name == '' || this.trialForm.value.branchNameControl == '' || this.trialForm.value.lecturerControl == '' || this.detailContent == '') {
+    if (this.trialForm.value.name == '' || this.trialForm.value.branchNameControl == '' || this.trialForm.value.lecturerControl == '' || this.detailContent == '' || this.fileList.length == 0) {
       this.message.error("信息不能为空");
     }else {
       this.branches.forEach(item => {
@@ -115,7 +117,7 @@ export class TrialModalComponent implements OnInit {
         trialId: this.item.trialId,
         name: this.trialForm.value.name,
         detail: this.detailContent,
-        imgUrl: this.item.imgUrl,
+        imgUrl: this.fileList[0].response.url,
         categoryId: this.trialForm.value.type,
         branchId: this.branchId,
         lecturerId: this.lecturerId,
@@ -138,5 +140,18 @@ export class TrialModalComponent implements OnInit {
     this.previewImage = file.url || file.thumbUrl;
     this.previewVisible = true;
   };
+
+  handleRemove = (file: UploadFile) => {
+    this.fileList = this.fileList.filter(photo => photo.status == 'done');
+  };
+
+  handleChange(info: {file: UploadFile}) {
+    if (info.file.status == 'done') {
+      if (this.fileList.length > 1) {
+        this.fileList.splice(0, 1);
+        console.log(this.fileList);
+      }
+    }
+  }
 
 }
