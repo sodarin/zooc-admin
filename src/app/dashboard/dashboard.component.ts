@@ -37,31 +37,46 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.elaborateCourseService$.getCategories().subscribe(result => {
+      //获得课程种类
       this.categories = result;
+      //获得所有课程
       this.elaborateCourseService$.getAllElaborateCourse(1).subscribe(result => {
         this.elaborateCourse = result.list;
         this.categories.forEach((item) => {
+          //获得每种课程类别有多少门课
           let courses = this.elaborateCourse.filter(course => course.categoryId == item.categoryId);
           if (courses.length != 0) {
             this.courseCategoryList.push({value: courses.length, name: item.name});
           }
           this.totalCourse += courses.length;
         });
+        //通过echarts来初始化饼状图
         this.courseChart = echarts.init(document.getElementById('courseChart'));
+        //初始化配置
         const courseOptions = {
+          //配置标题名称及位置
+          //x：横向居中显示
           title: {
             text: '课程类别比例',
             x: 'center'
           },
+          //配置鼠标悬浮时提示窗体
           tooltip: {
             trigger: 'item',
             formatter: "{a} <br/>{b} : {c} ({d}%)"
           },
+          //配置铭牌
+          //orient：横向或纵向显示
+          //left：显示位置
+          //data：铭牌要呈现的数据，在这里为课程类别
           legend: {
             orient: 'vertical',
             left: 'left',
             data: this.categories
           },
+          //饼状图配置
+          //radius：半径大小
+          //center：x轴及y轴的位置
           series : [
             {
               name: '课程种类',

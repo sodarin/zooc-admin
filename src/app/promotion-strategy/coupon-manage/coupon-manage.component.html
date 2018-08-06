@@ -1,0 +1,40 @@
+<div class="content">
+  <div class="coupon-control">
+    <nz-switch [(ngModel)]="switchValue" [nzCheckedChildren]="'开'" [nzUnCheckedChildren]="'关'" (click)="clickSwitch()"></nz-switch>
+  </div>
+
+  <nz-table
+    #nzTable
+    nzBordered
+    [nzFrontPagination]="false"
+    [nzLoading]="loading"
+    [nzTotal]="total"
+    [(nzPageIndex)]="pageIndex"
+    [(nzPageSize)]="pageSize"
+    (nzPageIndexChange)="searchData()"
+    [nzData]="displayData">
+    <thead>
+    <tr>
+      <th>
+        优惠券编号
+      </th>
+      <th>
+        优惠券金额
+      </th>
+      <th>
+        发布时间
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of nzTable.data">
+      <td>{{data.userId}}</td>
+      <td>{{data.username}}</td>
+      <td>{{data.email}}</td>
+      <td>{{data.telephone}}</td>
+      <td>{{data.points}}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>
+

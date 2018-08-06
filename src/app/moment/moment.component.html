@@ -1,7 +1,14 @@
 <div class="content">
   <button style="margin-top: 28px" nz-button [nzType]="'primary'" (click)="addNewMoment()">添加朋友圈</button>
 
-  <app-moment-list *ngIf="moments !==null && moments.length > 0" [moments]="moments" [total]="totalSize" [pageIndex]="targetPage" (editContent)="updateContent($event)" (pageEvent)="turnToNewPage($event)"></app-moment-list>
+  <app-moment-list *ngIf="moments !==null && moments.length > 0"
+                   [moments]="moments"
+                   [total]="totalSize"
+                   [pageIndex]="targetPage"
+                   (editContent)="updateContent($event)"
+                   (pageEvent)="turnToNewPage($event)">
+
+  </app-moment-list>
 
 
   <div *ngIf="moments == null || moments.length == 0" class="no-moment">

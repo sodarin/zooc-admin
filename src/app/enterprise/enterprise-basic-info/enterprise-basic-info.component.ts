@@ -83,6 +83,10 @@ export class EnterpriseBasicInfoComponent implements OnInit {
     item.isEditing = false;
   }
 
+  //每当图片上传的状态发生改变时会触发这个函数
+  //上传的图片会存在图片服务器上，图片服务器成功响应时会返回一个url地址，封装在info.file.response中
+  //这个url就是图片在服务器上的地址，可以通过访问这个地址直接浏览图片
+  //将这个url传到数据库
   handleChange(info: {file: UploadFile}) {
     if (info.file.status == 'done') {
       this.fileList.splice(0, 1);
@@ -110,6 +114,8 @@ export class EnterpriseBasicInfoComponent implements OnInit {
       }
   }
 
+  //处理图片预览
+  //接收到被点击的图片信息，将模态框visible属性设为true，并传入该图片的url
   handlePreview = (file: UploadFile) => {
     this.previewImage = file.url || file.thumbUrl;
     this.previewVisible = true;

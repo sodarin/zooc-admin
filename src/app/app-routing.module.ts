@@ -12,6 +12,8 @@ import {OrderComponent} from './order/order.component';
 import {ReservationComponent} from './reservation/reservation.component';
 import {RefundComponent} from './refund/refund.component';
 import {MomentComponent} from './moment/moment.component';
+import {CouponManageComponent} from './promotion-strategy/coupon-manage/coupon-manage.component';
+import {PointManageComponent} from './promotion-strategy/point-manage/point-manage.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -26,7 +28,9 @@ const routes: Routes = [
       {path: 'order', component: OrderComponent},
       {path: 'reservation', component: ReservationComponent},
       {path: 'refund', component: RefundComponent},
-      {path: 'moment', component: MomentComponent}
+      {path: 'moment', component: MomentComponent},
+      {path: 'coupon', component: CouponManageComponent},
+      {path: 'point', component: PointManageComponent}
     ]
   }
 ];

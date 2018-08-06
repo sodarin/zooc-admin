@@ -1,0 +1,64 @@
+<div class="content">
+  <div class="point-control">
+    <nz-switch [(ngModel)]="switchValue" [nzCheckedChildren]="'开'" [nzUnCheckedChildren]="'关'" (click)="clickSwitch()"></nz-switch>
+    <div class="empty-space"></div>
+    <div class="checkin-control inline-flex" style="margin-right: 20px;">
+      <span>每日签到积分：</span>
+      <nz-input-number [(ngModel)]="checkinPoints" [nzMin]="1" [nzStep]="1" [nzDisabled]="isDisabled"></nz-input-number>
+    </div>
+    <div class="points-transition inline-flex" style="margin-right: 20px;">
+      <span>积分汇率：</span>
+      <nz-input-number [(ngModel)]="pointsPerYuan" [nzMin]="1" [nzMax]="100" [nzStep]="1" [nzDisabled]="isDisabled"></nz-input-number>
+    </div>
+    <div class="confirm-button">
+      <button nz-button (click)="updateStrategy()" [nzType]="'primary'">确认</button>
+    </div>
+  </div>
+
+  <!--<nz-table-->
+    <!--#nzTable-->
+    <!--nzBordered-->
+    <!--[nzFrontPagination]="false"-->
+    <!--[nzLoading]="loading"-->
+    <!--[nzTotal]="total"-->
+    <!--[(nzPageIndex)]="pageIndex"-->
+    <!--[(nzPageSize)]="pageSize"-->
+    <!--(nzPageIndexChange)="searchData()"-->
+    <!--[nzData]="displayData">-->
+    <!--<thead>-->
+    <!--<tr>-->
+      <!--<th>-->
+        <!--用户编号-->
+        <!--&lt;!&ndash;<nz-dropdown nzTrigger="hover" [nzClickHide]="false">&ndash;&gt;-->
+          <!--&lt;!&ndash;<i class="anticon anticon-search ant-table-filter-icon" nz-dropdown></i>&ndash;&gt;-->
+          <!--&lt;!&ndash;<div class="custom-filter-dropdown">&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="text" nz-input placeholder="搜索名称" [(ngModel)]="searchValue">&ndash;&gt;-->
+            <!--&lt;!&ndash;<button nz-button [nzType]="'primary'" (click)="search()">搜索</button>&ndash;&gt;-->
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</nz-dropdown>&ndash;&gt;-->
+      <!--</th>-->
+      <!--<th>-->
+        <!--用户名称-->
+      <!--</th>-->
+      <!--<th>-->
+        <!--用户邮箱-->
+      <!--</th>-->
+      <!--<th>-->
+        <!--用户手机号码-->
+      <!--</th>-->
+      <!--<th>-->
+        <!--积分总数-->
+      <!--</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody>-->
+    <!--<tr *ngFor="let data of nzTable.data">-->
+      <!--<td>{{data.userId}}</td>-->
+      <!--<td>{{data.username}}</td>-->
+      <!--<td>{{data.email}}</td>-->
+      <!--<td>{{data.telephone}}</td>-->
+      <!--<td>{{data.points}}</td>-->
+    <!--</tr>-->
+    <!--</tbody>-->
+  <!--</nz-table>-->
+</div>

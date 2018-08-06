@@ -38,6 +38,8 @@ import {NgxAmapModule} from 'ngx-amap';
 import { CourseOfferingInputComponent } from './modal/course-modal/course-offering-input/course-offering-input.component';
 import { TrialModalComponent } from './modal/trial-modal/trial-modal.component';
 import { CommentModalComponent } from './modal/comment-modal/comment-modal.component';
+import { CouponManageComponent } from './promotion-strategy/coupon-manage/coupon-manage.component';
+import { PointManageComponent } from './promotion-strategy/point-manage/point-manage.component';
 
 registerLocaleData(zh);
 
@@ -65,6 +67,8 @@ registerLocaleData(zh);
     CourseOfferingInputComponent,
     TrialModalComponent,
     CommentModalComponent,
+    CouponManageComponent,
+    PointManageComponent,
   ],
   imports: [
     BrowserModule,
