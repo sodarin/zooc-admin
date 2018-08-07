@@ -29,7 +29,19 @@ export class PromotionStrategyService {
   }
 
   getCouponList(enterpriseId: number, usePagination: boolean, targetPage: number, pageSize: number): Observable<any> {
-    return this._http.get(`/api/v1/enterprise/${enterpriseId}/coupon/list`);
+    return this._http.get(`/api/v1/enterprise/${enterpriseId}/coupon/list?usePagination=${usePagination}&targetPage=${targetPage}&pageSize=${pageSize}`);
+  }
+
+  createCoupon(data: any, enterpriseId: number): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this._http.post(`/api/v1/enterprise/${enterpriseId}/coupon`, {
+      value: data.value,
+      threshold: data.threshold
+    }, httpOptions)
   }
 }
 

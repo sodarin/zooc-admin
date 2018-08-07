@@ -1,0 +1,18 @@
+<form nz-form [formGroup]="couponForm">
+  <nz-form-item style="width: 100%;">
+    <nz-form-control>
+      <nz-input-group>
+        <span>优惠金额：</span>
+        <nz-input-number formControlName="value" [nzMin]="1" [nzStep]="1"></nz-input-number>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item style="width: 100%;">
+    <nz-form-control>
+      <nz-input-group>
+        <span>优惠门槛：</span>
+        <nz-input-number formControlName="threshold" [nzMin]="1" [nzStep]="10"></nz-input-number>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+</form>

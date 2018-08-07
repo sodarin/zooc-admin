@@ -1,11 +1,11 @@
 <div class="content">
   <div class="coupon-control">
     <nz-switch [(ngModel)]="switchValue" [nzCheckedChildren]="'开'" [nzUnCheckedChildren]="'关'" (click)="clickSwitch()"></nz-switch>
+    <button [disabled]="!switchValue" nz-button (click)="createCoupon()" [nzType]="'primary'">创建新优惠</button>
   </div>
 
   <nz-table
     #nzTable
-    nzBordered
     [nzFrontPagination]="false"
     [nzLoading]="loading"
     [nzTotal]="total"
@@ -22,17 +22,19 @@
         优惠券金额
       </th>
       <th>
+        门槛
+      </th>
+      <th>
         发布时间
       </th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let data of nzTable.data">
-      <td>{{data.userId}}</td>
-      <td>{{data.username}}</td>
-      <td>{{data.email}}</td>
-      <td>{{data.telephone}}</td>
-      <td>{{data.points}}</td>
+      <td>{{data.couponId}}</td>
+      <td>{{data.value}}</td>
+      <td>{{data.threshold}}</td>
+      <td>{{data.time | date: 'yyyy 年 MM 月 dd 日 HH:mm:ss'}}</td>
     </tr>
     </tbody>
   </nz-table>

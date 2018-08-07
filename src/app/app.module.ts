@@ -40,6 +40,7 @@ import { TrialModalComponent } from './modal/trial-modal/trial-modal.component';
 import { CommentModalComponent } from './modal/comment-modal/comment-modal.component';
 import { CouponManageComponent } from './promotion-strategy/coupon-manage/coupon-manage.component';
 import { PointManageComponent } from './promotion-strategy/point-manage/point-manage.component';
+import { CouponModalComponent } from './modal/coupon-modal/coupon-modal/coupon-modal.component';
 
 registerLocaleData(zh);
 
@@ -69,6 +70,7 @@ registerLocaleData(zh);
     CommentModalComponent,
     CouponManageComponent,
     PointManageComponent,
+    CouponModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -101,7 +103,8 @@ registerLocaleData(zh);
     MomentModalComponent,
     CourseOfferingInputComponent,
     TrialModalComponent,
-    CommentModalComponent
+    CommentModalComponent,
+    CouponModalComponent
   ],
   bootstrap: [AppComponent]
 })

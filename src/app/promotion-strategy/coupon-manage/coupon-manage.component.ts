@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {PromotionStrategy, PromotionStrategyService} from '../../service/promotion/promotion-strategy.service';
-import {NzMessageService} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {CourseDetail} from '../../service/course/elaborate-course/elaborate-course.service';
+import {CouponModalComponent} from '../../modal/coupon-modal/coupon-modal/coupon-modal.component';
 
 @Component({
   selector: 'app-coupon-manage',
@@ -24,7 +25,8 @@ export class CouponManageComponent implements OnInit {
 
 
   constructor(private promotionStrategyService$: PromotionStrategyService,
-              private message: NzMessageService) { }
+              private message: NzMessageService,
+              private modalService: NzModalService) { }
 
   ngOnInit() {
     this.promotionStrategyService$.getPromotionStrategy(1).subscribe( result => {
@@ -32,7 +34,14 @@ export class CouponManageComponent implements OnInit {
       this.switchValue = this.promotionStrategy.useCoupons;
     });
 
-    this.promotionStrategyService$.getCouponList(1, true, this.pageIndex, this.pageSize).subscribe( result => {
+    this.searchData(1);
+  }
+
+  searchData(pageIndex: number = this.pageIndex) {
+    this.promotionStrategyService$.getCouponList(1, true, pageIndex, this.pageSize).subscribe( result => {
+      this.loading = false;
+      this.total = result.total;
+      this.totalPage = Math.ceil(this.total / this.pageSize);
       this.displayData = result.list;
     })
 
@@ -44,7 +53,33 @@ export class CouponManageComponent implements OnInit {
       this.message.success('修改成功');
     }, error2 => {
       this.message.error(error2.error);
+      this.switchValue = true;
     });
+  }
+
+  createCoupon() {
+    const modal = this.modalService.create({
+      nzTitle: '新增优惠券',
+      nzContent: CouponModalComponent,
+      nzFooter: [{
+        label: '提交',
+        onClick: (componentInstance) => componentInstance.submit()
+      }, {
+        label: '取消',
+        onClick: componentInstance => componentInstance.closeDialog()
+      }]
+    });
+    modal.afterClose.subscribe(result => {
+      if (result){
+        this.promotionStrategyService$.createCoupon(result, 1)
+          .subscribe(next => {
+            this.searchData(1);
+            this.message.success('新增优惠券成功');
+          }, error => {
+            this.message.error(error.error);
+          })
+      }
+    })
   }
 
 }

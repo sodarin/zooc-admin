@@ -41,10 +41,10 @@ export class PointManageComponent implements OnInit {
     }
     this.promotionStrategyService$.updatePromotionStrategy(1, updateContent).subscribe( result => {
       this.message.success('修改成功');
-      this.switchValue = true;
-      this.isDisabled = false;
     }, error2 => {
       this.message.error(error2.error);
+      this.switchValue = true;
+      this.isDisabled = false;
     })
   }
 
