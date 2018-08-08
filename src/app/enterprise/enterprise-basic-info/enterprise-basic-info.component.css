@@ -12,6 +12,9 @@ div.ant-list-item-meta-description {
   font-size: 32px;
   color: #999;
 }
+:host ::ng-deep .anticon-inbox {
+  color: #999;
+}
 :host ::ng-deep .upload-text {
   margin-top: 8px;
   color: #666;
@@ -39,4 +42,9 @@ div.ant-list-item-meta-description {
   margin-left: 20px;
 }
 :host ::ng-deep .ant-upload.ant-upload-drag { height: 180px; }
+.video-panel {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
 

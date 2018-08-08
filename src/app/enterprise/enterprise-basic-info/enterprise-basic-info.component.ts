@@ -55,6 +55,15 @@ export class EnterpriseBasicInfoComponent implements OnInit {
               url: `${this.enterprise.imgUrl}`
             }
           ];
+          this.videoList = [
+            {
+              uid: -1,
+              name: 'video',
+              status: 'done',
+              url: `${this.enterprise.videoUrl}`
+            }
+          ];
+          this.videoUrl = this.videoList[0].url;
           this.detail = this.enterprise.detail
         })
     }

@@ -31,7 +31,7 @@
       (nzChange)="handleChange($event)"
       [nzPreview]="handlePreview">
       <i class="anticon anticon-sync"></i>
-      <div class="upload-text">Update</div>
+      <div class="upload-text">图片更新</div>
     </nz-upload>
     <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
               (nzOnCancel)="previewVisible=false">
@@ -43,16 +43,19 @@
 
   <div class="upload-video">
     <span class="title" style="font-size: 26px; line-height: 60px; color: #000;">企业视频上传</span>
-    <nz-upload
-      nzType="drag"
-      [nzLimit]="3"
-      nzAction="/api/v1/file"
-      (nzChange)="handleVideoUpload($event)">
-      <p class="ant-upload-drag-icon">
-        <i class="anticon anticon-inbox"></i>
-      </p>
-      <p class="ant-upload-text">Click or drag file to this area to upload</p>
-    </nz-upload>
+    <div class="video-panel">
+      <video *ngIf="videoList.length === 1" controls="controls" [src]="videoUrl"></video>
+      <nz-upload
+        nzType="drag"
+        [nzLimit]="3"
+        nzAction="/api/v1/file"
+        (nzChange)="handleVideoUpload($event)">
+        <p class="ant-upload-drag-icon">
+          <i class="anticon anticon-inbox"></i>
+        </p>
+        <p class="ant-upload-text">添加视频文件</p>
+      </nz-upload>
+    </div>
   </div>
   <div class="empty-space" style="height: 50px; width: 100%"></div>
 
