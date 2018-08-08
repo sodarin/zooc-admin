@@ -81,8 +81,8 @@ export class DashboardComponent implements OnInit {
             {
               name: '课程种类',
               type: 'pie',
-              radius : '65%',
-              center: ['50%', '60%'],
+              radius : '60%',
+              center: ['50%', '50%'],
               data: this.courseCategoryList,
               itemStyle: {
                 emphasis: {
@@ -124,8 +124,8 @@ export class DashboardComponent implements OnInit {
             {
               name: '课程种类',
               type: 'pie',
-              radius : '65%',
-              center: ['50%', '60%'],
+              radius : '60%',
+              center: ['50%', '50%'],
               data: this.trialCategoryList,
               itemStyle: {
                 emphasis: {

@@ -3,16 +3,18 @@
     <div nz-col [nzSpan]="12">
       <nz-tabset style="background: #ffffff;">
         <nz-tab nzTitle="精品课程类别">
-          <div id="courseChart" style="height: 277px; background: white"></div>
+          <div id="courseChart" style="height: 277px; background: white; padding-left: 24px;"></div>
         </nz-tab>
         <nz-tab [nzTitle]="'试听课程类别'">
-          <div id="trialChart" style="height: 277px; background: white"></div>
+          <div id="trialChart" style="height: 277px; background: white; padding-left: 24px;"></div>
         </nz-tab>
       </nz-tabset>
     </div>
 
-    <div [ngStyle]="{background: '#ffffff'}" nz-col [nzSpan]="12">
-      <nz-calendar (nzValueChange)="onValueChange($event)"></nz-calendar>
+    <div nz-col [nzSpan]="12">
+      <div [ngStyle]="{background: '#ffffff'}">
+        <nz-calendar (nzValueChange)="onValueChange($event)"></nz-calendar>
+      </div>
     </div>
   </div>
 
