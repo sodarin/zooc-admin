@@ -6,7 +6,7 @@
         <nz-list-item-meta [nzTitle]="title" [nzDescription]="description">
           <ng-template #title>
             <span style="font-weight: bold; margin-bottom: 10px; display: block">{{item.username}}</span>
-            <p>{{item.content}}</p>
+            <p style="word-break: break-all; width: 100%">{{item.content}}</p>
           </ng-template>
           <ng-template #description>
             <span style="font-size: 12px;">{{item.time | date: 'yyyy 年 MM 月 dd 日 HH:mm:ss'}}</span>

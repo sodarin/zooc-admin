@@ -32,9 +32,14 @@ export class CkeditorComponent implements OnInit, OnChanges {
   }
 
   changeContent() {
-    if(this.content !== this.ckeditorContent){
+    setTimeout( () => {
       this.detailEmit.emit(this.content);
-    }
+      }, 500)
+
+
+    // if(this.content !== this.ckeditorContent){
+    //   this.detailEmit.emit(this.content);
+    // }
   }
 
 

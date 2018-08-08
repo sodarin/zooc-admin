@@ -124,7 +124,9 @@ export class EnterpriseBasicInfoComponent implements OnInit {
   updateDetail(event: string) {
     this.enterpriseService$.updateEnterpriseDetail(event)
       .subscribe(result => {
-        this.message.success('内容已同步上传')
+        this.message.success('内容已同步上传', {
+          nzDuration: 500
+        })
       }, error => {
         this.message.error(error.error);
       })
