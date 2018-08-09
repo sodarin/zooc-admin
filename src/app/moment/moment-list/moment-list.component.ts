@@ -122,12 +122,39 @@ export class MomentListComponent implements OnInit {
     this.previewVisible = true;
   };
 
+  handleRemove = (file: UploadFile) => {
+    console.log(file);
+    let imgUrls = [];
+    let index = null;
+    this.moments.forEach((moment, j) => {
+      for (let i = 0; i < moment.fileList.length; i++) {
+       if (moment.fileList[i].uid == file.uid) {
+         index = j;
+         break;
+       }
+      }
+    });
+    this.moments[index].fileList = this.moments[index].fileList.filter(picture => picture.uid !== file.uid);
+    this.moments[index].fileList.forEach((picture, i) => {
+      imgUrls[i] = picture.url;
+    });
+    this.momentsService$.postPicture(imgUrls, this.moments[index]).subscribe(result => {
+      this.message.success('图片删除成功');
+    }, error2 => {
+      this.message.error(error2.error);
+    })
+  };
 
 
   statusChange(info: {file: UploadFile}, item: any) {
     if (info.file.status == 'done') {
+      item.fileList[item.fileList.length-1] = {uid: info.file.uid, name: info.file.name, url: info.file.response.url, status: 'done'};
       let imgUrls = [];
-      imgUrls[0] = info.file.response.url;
+      item.fileList.forEach((picture, i) => {
+        if (picture.status == 'done') {
+          imgUrls[i] = picture.url;
+        }
+      });
       this.momentsService$.postPicture(imgUrls, item).subscribe(result => {
         this.message.success('图片上传成功')
       }, error2 => {

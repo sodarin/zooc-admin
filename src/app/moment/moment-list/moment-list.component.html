@@ -15,6 +15,7 @@
               nzListType="picture-card"
               [(nzFileList)]="item.fileList"
               [nzShowButton]="item.fileList.length < 9"
+              [nzRemove]="handleRemove"
               (nzChange)="statusChange($event, item)"
               [nzPreview]="handlePreview">
               <i class="anticon anticon-plus"></i>
