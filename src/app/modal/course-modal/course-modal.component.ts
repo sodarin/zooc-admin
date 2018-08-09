@@ -58,7 +58,7 @@ export class CourseModalComponent implements OnInit {
       name: [this.item.name, [Validators.required]],
       price: [this.item.price, [Validators.required]],
       type: [this.item.categoryName],
-      statusDesc: [this.item.statusDesc, [Validators.required]]
+      status: [this.item.status, [Validators.required]]
     });
      if (this.item.imgUrl == ''){
        this.fileList = [];
@@ -117,7 +117,7 @@ export class CourseModalComponent implements OnInit {
         courseId: this.item.courseId,
         name: this.courseForm.value.name,
         detail: this.detailContent,
-        imgUrl: this.fileList[0].response.url,
+        imgUrl: this.fileList[0].url,
         categoryId: this.courseForm.value.type,
         price: this.courseForm.value.price,
         courseOfferings: this.courseOfferings
@@ -148,6 +148,7 @@ export class CourseModalComponent implements OnInit {
   handleChange(info: {file: UploadFile}) {
     if (info.file.status == 'done') {
       if (this.fileList.length > 1) {
+        this.fileList[1] = {uid: info.file.uid, status: 'done', url: info.file.response.url, name: info.file.name};
         this.fileList.splice(0, 1);
         console.log(this.fileList);
       }

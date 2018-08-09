@@ -39,11 +39,13 @@ export class EnterpriseBasicInfoComponent implements OnInit {
             {
               title: '企业名称',
               introduction: `${this.enterprise.name}`,
+              text: `${this.enterprise.name}`,
               isEditing: false
             },
             {
               title: '企业简介',
               introduction: `${this.enterprise.introduction}`,
+              text: `${this.enterprise.introduction}`,
               isEditing: false
             }
           ];
@@ -79,6 +81,7 @@ export class EnterpriseBasicInfoComponent implements OnInit {
         .subscribe(result => {
             this.message.success('修改成功');
             item.isEditing = false;
+            item.introduction = item.text;
           },
           error2 => {
             this.message.error(error2.error);
@@ -90,6 +93,7 @@ export class EnterpriseBasicInfoComponent implements OnInit {
 
   cancel(item: any) {
     item.isEditing = false;
+    item.text = item.introduction;
   }
 
   //每当图片上传的状态发生改变时会触发这个函数

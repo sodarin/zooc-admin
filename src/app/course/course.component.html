@@ -51,7 +51,7 @@
         <td>￥{{data.price}}.00</td>
         <td>{{data.categoryName}}</td>
         <td>{{data.releaseTime | date: 'yyyy-MM-dd'}}</td>
-        <td>{{data.statusDesc}}</td>
+        <td>{{data.status}}</td>
         <td>
           <i style="margin-left: 5px;margin-right: 30px; cursor: pointer" class="anticon anticon-edit" (click)="edit(data)"></i>
           <nz-popconfirm [nzTitle]="'确认删除？'" (nzOnConfirm)="deleteRow(data.branchId)">

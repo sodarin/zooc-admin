@@ -12,7 +12,7 @@
         <ng-template #nzContent>
           <span class="introduction" *ngIf="!item.isEditing" style="color: rgba(0, 0, 0, .65); font-size: 16px;">{{item.introduction}}</span>
           <label>
-            <textarea [(ngModel)]="item.introduction" autofocus="autofocus" *ngIf="item.isEditing" nz-input nzAutosize>{{item.introduction}}</textarea>
+            <textarea [(ngModel)]="item.text" autofocus="autofocus" *ngIf="item.isEditing" nz-input nzAutosize>{{item.introduction}}</textarea>
           </label>
         </ng-template>
       </nz-list-item-meta>

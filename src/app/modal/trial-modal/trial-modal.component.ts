@@ -117,7 +117,7 @@ export class TrialModalComponent implements OnInit {
         trialId: this.item.trialId,
         name: this.trialForm.value.name,
         detail: this.detailContent,
-        imgUrl: this.fileList[0].response.url,
+        imgUrl: this.fileList[0].url,
         categoryId: this.trialForm.value.type,
         branchId: this.branchId,
         lecturerId: this.lecturerId,
@@ -148,6 +148,7 @@ export class TrialModalComponent implements OnInit {
   handleChange(info: {file: UploadFile}) {
     if (info.file.status == 'done') {
       if (this.fileList.length > 1) {
+        this.fileList[1] = {uid: info.file.uid, status: 'done', url: info.file.response.url, name: info.file.name};
         this.fileList.splice(0, 1);
         console.log(this.fileList);
       }

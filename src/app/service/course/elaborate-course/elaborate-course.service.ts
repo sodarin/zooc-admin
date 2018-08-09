@@ -108,7 +108,7 @@ export class CourseDetail {
     public categoryName: string,
     public releaseTime: string,
     public price: number,
-    public statusDesc: StatusType,
+    public status: StatusType,
     public courseOfferings: CourseOffering
   ){}
 
